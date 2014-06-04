@@ -13,4 +13,11 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import "AppDelegate.h"
 #endif
+
+#define SITE_CODE @"flapp"
+#define API_KEY @"hx9hknYy5FA92icFKLuk"
+#define UUID_KEY @"jp.pocket-solution.flapp.uuid"
+#define TOKEN_KEY @"jp.pocket-solutiion.flapp.token"
+#define CHECK_KEY @"jp.pocket-solutiion.flapp.pointcheck"
