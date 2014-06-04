@@ -54,6 +54,7 @@
     //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:1.0 green:0.597 blue:0.199 alpha:1.0];
     
     //self.charaImage.image = [UIImage imageNamed:@"funassi.png"];
+    
     self.charaImage.image = [UIImage imageNamed:@"chara.png"];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"BannerListViewCell" bundle:nil] forCellReuseIdentifier:@"BannerCell"];
