@@ -33,7 +33,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"貯める" image:[UIImage imageNamed:@"money"] tag:1];
+        //self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"貯める" image:[UIImage imageNamed:@"money"] tag:1];
+        
+        UIImage *unselectImg = [[UIImage imageNamed:@"footer10"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIImage *selectImg = [[UIImage imageNamed:@"footer11"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"貯める" image:unselectImg tag:1];
+        [self.tabBarItem setSelectedImage:selectImg];
+        
     }
     return self;
 }
@@ -45,7 +51,14 @@
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.navigationItem.title = @"ポイント忍者くん";
+    //self.navigationItem.title = @"ポイント忍者くん";
+    //UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320,44)];
+    //[navigationBar sizeToFit];
+    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_type02.png"]];
+    [navigationTitle sizeToFit];
+    navigationTitle.frame = CGRectMake(80, 10, 160, 20);
+    self.navigationItem.titleView = navigationTitle;
+    
     //self.navigationController.navigationBar.backgroundColor = [UIColor orangeColor];
     //self.navigationController.navigationBar.barTintColor = [UIColor orangeColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
@@ -55,7 +68,7 @@
     
     //self.charaImage.image = [UIImage imageNamed:@"funassi.png"];
     
-    self.charaImage.image = [UIImage imageNamed:@"chara.png"];
+    //self.charaImage.image = [UIImage imageNamed:@"ninja3-01.png"];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"BannerListViewCell" bundle:nil] forCellReuseIdentifier:@"BannerCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommendedListViewCell" bundle:nil] forCellReuseIdentifier:@"RecommendedCell"];
@@ -89,6 +102,7 @@
     [self.tableView reloadData];
     
     userInfo = [apiUtil getUserInfo];
+    //NSLog(@"userInfo:%@",userInfo);
     JDFlipNumberView *flipNumberView = [[JDFlipNumberView alloc] initWithDigitCount:7];
     flipNumberView.value = [[userInfo objectForKey:@"point"] integerValue];
     flipNumberView.frame = CGRectMake(80, 2, 200, 60);
@@ -107,6 +121,18 @@
         self.tableView.backgroundColor = [UIColor yellowColor];
     }
     */
+    if([[userInfo objectForKey:@"grade"] isEqualToString:@"中忍"]){
+        self.charaImage.image = [UIImage imageNamed:@"ninja3-02.png"];
+    } else if([[userInfo objectForKey:@"grade"] isEqualToString:@"上忍"]){
+        self.charaImage.image = [UIImage imageNamed:@"ninja3-03.png"];
+    } else if([[userInfo objectForKey:@"grade"] isEqualToString:@"達忍"]){
+        self.charaImage.image = [UIImage imageNamed:@"ninja3-04.png"];
+    } else if([[userInfo objectForKey:@"grade"] isEqualToString:@"超忍"]){
+        self.charaImage.image = [UIImage imageNamed:@"ninja3-05.png"];
+    } else {
+        self.charaImage.image = [UIImage imageNamed:@"ninja3-01.png"];
+    }
+    
     self.tableView.backgroundColor = [UIColor orangeColor];
     
     if(gradeup_label == nil){
@@ -195,6 +221,15 @@
                 });
             });
         }
+
+        if([[banner objectForKey:@"is_high"] intValue] == 1){
+            cell.obi_image.image = [UIImage imageNamed:@"high.png"];
+        } else if([[banner objectForKey:@"is_free"] intValue] == 1){
+            cell.obi_image.image = [UIImage imageNamed:@"free.png"];
+        } else if([[banner objectForKey:@"is_new"] intValue] == 1){
+            cell.obi_image.image = [UIImage imageNamed:@"new.png"];
+        }
+        
     } else {
         switch (indexPath.row) {
             /*
@@ -238,6 +273,14 @@
                             cell.bnr_image.image = bnrImage;
                         });
                     });
+                }
+                
+                if([[banner objectForKey:@"is_high"] intValue] == 1){
+                    cell.obi_image.image = [UIImage imageNamed:@"high.png"];
+                } else if([[banner objectForKey:@"is_free"] intValue] == 1){
+                    cell.obi_image.image = [UIImage imageNamed:@"free.png"];
+                } else if([[banner objectForKey:@"is_new"] intValue] == 1){
+                    cell.obi_image.image = [UIImage imageNamed:@"new.png"];
                 }
 
                 break;

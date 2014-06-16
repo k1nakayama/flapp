@@ -13,6 +13,7 @@
 @property (weak,nonatomic) IBOutlet UILabel *condition;
 @property (weak,nonatomic) IBOutlet UILabel *point;
 @property (weak,nonatomic) IBOutlet UIImageView *bnr_image;
+@property (weak,nonatomic) IBOutlet UIImageView *obi_image;
 
 
 @end
