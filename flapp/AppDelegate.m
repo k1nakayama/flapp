@@ -11,6 +11,7 @@
 #import "PointExchangeViewController.h"
 #import "MenuViewController.h"
 #import "AppApiUtil.h"
+#import "PointUpGameViewController.h"
 
 void uncaughtExceptionHandler (NSException *exception){
     NSLog(@"CRASH: %@", exception);
@@ -37,14 +38,18 @@ void uncaughtExceptionHandler (NSException *exception){
     BannerListViewController *bannerListViewController = [[BannerListViewController alloc] initWithNibName:@"BannerListViewController" bundle:nil];
     PointExchangeViewController *pointExchangeViewController = [[PointExchangeViewController alloc] initWithNibName:@"PointExchangeViewController" bundle:nil];
     MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
+    PointUpGameViewController *pointUpGameViewController = [[PointUpGameViewController alloc] initWithNibName:@"PointUpGameViewController" bundle:nil];
  
+
+    [viewControllers addObject:pointUpGameViewController];
+
     //それぞれNavigationContorllerにセット
     UINavigationController *bannerListNavi = [[UINavigationController alloc] initWithRootViewController:bannerListViewController];
     [bannerListNavi setTitle:@"BannerList"];
     [viewControllers addObject:bannerListNavi];
     
     UINavigationController *pointExchangeNavi = [[UINavigationController alloc] initWithRootViewController:pointExchangeViewController];
-    [pointExchangeNavi setNavigationBarHidden:YES];
+    //[pointExchangeNavi setNavigationBarHidden:YES];
     [pointExchangeNavi setTitle:@"PointExchange"];
     [viewControllers addObject:pointExchangeNavi];
 
@@ -59,6 +64,7 @@ void uncaughtExceptionHandler (NSException *exception){
     self.tabBarController.tabBar.barTintColor= [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
     
     [self.tabBarController setViewControllers:viewControllers];
+    [self.tabBarController setSelectedIndex:1];
     
     self.window.rootViewController = self.tabBarController;
     

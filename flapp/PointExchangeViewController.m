@@ -24,7 +24,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"交換" image:[UIImage imageNamed:@"gift"] tag:2];
+        //self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"交換" image:[UIImage imageNamed:@"gift"] tag:2];
+        UIImage *unselectImg = [[UIImage imageNamed:@"footer21"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIImage *selectImg = [[UIImage imageNamed:@"footer20"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"交換" image:unselectImg tag:2];
+        [self.tabBarItem setSelectedImage:selectImg];
         //self.tabBarItem.title = @"交換";
     }
     return self;
@@ -38,6 +42,11 @@
     self.tableView.delegate = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"PointExchangeViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
     
+    
+    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_type02_2.png"]];
+    self.navigationItem.titleView = navigationTitle;
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
     /*
     AppApiUtil *apiUtile = [[AppApiUtil alloc] init];
     giftInfo = [apiUtile getGiftInfo];

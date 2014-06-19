@@ -14,6 +14,8 @@
 @property (weak,nonatomic) IBOutlet UILabel *point;
 @property (weak,nonatomic) IBOutlet UIImageView *bnr_image;
 @property (weak,nonatomic) IBOutlet UIImageView *obi_image;
-
+@property (weak,nonatomic) IBOutlet UIImageView *category_image1;
+@property (weak,nonatomic) IBOutlet UIImageView *category_image2;
+@property (weak,nonatomic) IBOutlet UIImageView *category_image3;
 
 @end

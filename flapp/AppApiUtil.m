@@ -385,11 +385,16 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *ud_check = [ud stringForKey:check_key];
     NSString *last_check;
+    NSLog(@"checkNewPoint ud_check: %@",ud_check);
     if(ud_check){
         last_check = ud_check;
     } else {
         last_check = [self dateWithMyFormat];
     }
+    
+    //デバッグのため強制的に
+    //last_check = @"2014-06-17 19:58:56";
+    
     //パラメータの配列を作成
     NSMutableDictionary *param_list = [NSMutableDictionary dictionaryWithObjectsAndKeys:site_code,
                                        @"site_code",user_id,@"user_id",last_check,@"start_date",date, @"transaction_date",nil];
@@ -414,6 +419,11 @@
             [ud setObject:last_check forKey:check_key];
             [ud synchronize];
             return jsonObj;
+        } else if([detail_code isEqualToString:@"10"]) {
+            last_check = [self dateWithMyFormat];
+            [ud setObject:last_check forKey:check_key];
+            [ud synchronize];
+            return nil;
         } else {
             // TODO: OKなのに00じゃない処理
             return nil;

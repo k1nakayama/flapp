@@ -10,12 +10,14 @@
 #import "AppApiUtil.h"
 #import "JDFlipNumberView.h"
 #import "BannerDetailViewController.h"
+#import "NewPointViewController.h"
 
 @interface BannerListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *charaImage;
 @property (weak, nonatomic) IBOutlet UIView *pointStatusView;
 @property (weak, nonatomic) IBOutlet UILabel *nextStageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *popupBtn;
 
 @end
 
@@ -23,9 +25,17 @@
     NSArray *bannerInfo;
     NSArray *recommendInfo;
     NSDictionary *userInfo;
-    UISegmentedControl *segment1;
-    UISegmentedControl *segment2;
+    //UISegmentedControl *segment1;
+    //UISegmentedControl *segment2;
     UILabel *gradeup_label;
+    NewPointViewController *newPointView;
+    UIButton *filteringBtn1;
+    UIButton *filteringBtn2;
+    UIButton *filteringBtn3;
+    UIButton *sortBtn1;
+    UIButton *sortBtn2;
+    int filteringStatus;
+    int sortStatus;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,8 +45,8 @@
         // Custom initialization
         //self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"貯める" image:[UIImage imageNamed:@"money"] tag:1];
         
-        UIImage *unselectImg = [[UIImage imageNamed:@"footer10"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        UIImage *selectImg = [[UIImage imageNamed:@"footer11"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIImage *unselectImg = [[UIImage imageNamed:@"footer11"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIImage *selectImg = [[UIImage imageNamed:@"footer10"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"貯める" image:unselectImg tag:1];
         [self.tabBarItem setSelectedImage:selectImg];
         
@@ -54,9 +64,9 @@
     //self.navigationItem.title = @"ポイント忍者くん";
     //UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320,44)];
     //[navigationBar sizeToFit];
-    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_type02.png"]];
-    [navigationTitle sizeToFit];
-    navigationTitle.frame = CGRectMake(80, 10, 160, 20);
+    UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_type02_2.png"]];
+    //[navigationTitle sizeToFit];
+    //navigationTitle.frame = CGRectMake(80, 10, 160, 20);
     self.navigationItem.titleView = navigationTitle;
     
     //self.navigationController.navigationBar.backgroundColor = [UIColor orangeColor];
@@ -74,6 +84,38 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommendedListViewCell" bundle:nil] forCellReuseIdentifier:@"RecommendedCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"BannerListCategoryViewCell" bundle:nil] forCellReuseIdentifier:@"CategoryCell"];
 
+    if(filteringBtn1 == nil){
+        filteringBtn1 = [[UIButton alloc] initWithFrame:CGRectMake(10, 8, 100, 40)];
+        [filteringBtn1 setTag:1];
+        [filteringBtn1 setBackgroundImage:[UIImage imageNamed:@"button1.png"] forState:UIControlStateNormal];
+        [filteringBtn1 addTarget:self action:@selector(segmentDidChange:) forControlEvents:UIControlEventTouchDown];
+    }
+    if(filteringBtn2 == nil){
+        filteringBtn2 = [[UIButton alloc] initWithFrame:CGRectMake(110, 8, 100, 40)];
+        [filteringBtn2 setTag:2];
+        [filteringBtn2 setBackgroundImage:[UIImage imageNamed:@"button3.png"] forState:UIControlStateNormal];
+        [filteringBtn2 addTarget:self action:@selector(segmentDidChange:) forControlEvents:UIControlEventTouchDown];
+    }
+    if(filteringBtn3 == nil){
+        filteringBtn3 = [[UIButton alloc] initWithFrame:CGRectMake(210, 8, 100, 40)];
+        [filteringBtn3 setTag:3];
+        [filteringBtn3 setBackgroundImage:[UIImage imageNamed:@"button2.png"] forState:UIControlStateNormal];
+        [filteringBtn3 addTarget:self action:@selector(segmentDidChange:) forControlEvents:UIControlEventTouchDown];
+    }
+    if(sortBtn1 == nil){
+        sortBtn1 = [[UIButton alloc] initWithFrame:CGRectMake(40, 50, 110, 40)];
+        [sortBtn1 setTag:4];
+        [sortBtn1 setBackgroundImage:[UIImage imageNamed:@"Segment2.png"] forState:UIControlStateNormal];
+        [sortBtn1 addTarget:self action:@selector(segmentDidChange:) forControlEvents:UIControlEventTouchDown];
+    }
+    if(sortBtn2 == nil){
+        sortBtn2 = [[UIButton alloc] initWithFrame:CGRectMake(160, 50, 110, 40)];
+        [sortBtn2 setTag:5];
+        [sortBtn2 setBackgroundImage:[UIImage imageNamed:@"Segment1.png"] forState:UIControlStateNormal];
+        [sortBtn2 addTarget:self action:@selector(segmentDidChange:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    /*
     if(segment1 == nil){
         NSArray *items = [NSArray arrayWithObjects:@"アプリDL",@"登録案件",@"その他",nil];
         segment1 = [[UISegmentedControl alloc] initWithItems:items];
@@ -89,6 +131,8 @@
         segment2.frame = CGRectMake(20, 43, 280, 29);
         [segment2 addTarget:self action:@selector(segmentDidChange:) forControlEvents:UIControlEventValueChanged];
     }
+    */
+     
 }
 -(void)viewWillAppear:(BOOL)animated{
     _progress = [[MBProgressHUD alloc] initWithView:self.view];
@@ -149,11 +193,14 @@
         self.nextStageLabel.backgroundColor = [UIColor whiteColor];
     }
     
+    [self segmentDidChange:nil];
+    
     //新着ポイントをチェック
     NSDictionary *newPointResult = [apiUtil checkNewPoint];
     if([[newPointResult objectForKey:@"detail_code"] isEqualToString:@"00"]){
         //NEWPOINT表示
         NSLog(@"NewPoint: %d",[[newPointResult objectForKey:@"new_point"] intValue]);
+        [self popupNewPointView:[newPointResult objectForKey:@"new_point"]];
     }
     
     //NSLog(@"bannerInfo: %lu",(unsigned long)[bannerInfo count]);
@@ -230,6 +277,101 @@
             cell.obi_image.image = [UIImage imageNamed:@"new.png"];
         }
         
+        cell.category_image1.image = nil;
+        cell.category_image2.image = nil;
+        cell.category_image3.image = nil;
+        
+        NSMutableArray *category_array = [[NSMutableArray alloc] init];
+        if([[banner objectForKey:@"is_limit"] intValue] == 1){
+            [category_array addObject:@"is_limit"];
+        }
+        if([[banner objectForKey:@"is_up"] intValue] == 1){
+            [category_array addObject:@"is_up"];
+        }
+        if([[banner objectForKey:@"is_exclusive"] intValue] == 1){
+            [category_array addObject:@"is_exclusive"];
+        }
+        if([[banner objectForKey:@"is_revival"] intValue] == 1){
+            [category_array addObject:@"is_revival"];
+        }
+        int c = 1;
+        for(NSString *category_key in category_array){
+            
+            if([category_key isEqualToString:@"is_limit"]){
+                switch (c) {
+                    case 1:
+                        cell.category_image1.image = [UIImage imageNamed:@"lable1.png"];
+                        c++;
+                        break;
+                    case 2:
+                        cell.category_image2.image = [UIImage imageNamed:@"lable1.png"];
+                        c++;
+                        break;
+                    case 3:
+                        cell.category_image3.image = [UIImage imageNamed:@"lable1.png"];
+                        c++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if([category_key isEqualToString:@"is_up"]){
+                switch (c) {
+                    case 1:
+                        cell.category_image1.image = [UIImage imageNamed:@"lable4.png"];
+                        c++;
+                        break;
+                    case 2:
+                        cell.category_image2.image = [UIImage imageNamed:@"lable4.png"];
+                        c++;
+                        break;
+                    case 3:
+                        cell.category_image3.image = [UIImage imageNamed:@"lable4.png"];
+                        c++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if([category_key isEqualToString:@"is_exclusive"]){
+                switch (c) {
+                    case 1:
+                        cell.category_image1.image = [UIImage imageNamed:@"lable3.png"];
+                        c++;
+                        break;
+                    case 2:
+                        cell.category_image2.image = [UIImage imageNamed:@"lable3.png"];
+                        c++;
+                        break;
+                    case 3:
+                        cell.category_image3.image = [UIImage imageNamed:@"lable3.png"];
+                        c++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if([category_key isEqualToString:@"is_revival"]){
+                switch (c) {
+                    case 1:
+                        cell.category_image1.image = [UIImage imageNamed:@"lable2.png"];
+                        c++;
+                        break;
+                    case 2:
+                        cell.category_image2.image = [UIImage imageNamed:@"lable2.png"];
+                        c++;
+                        break;
+                    case 3:
+                        cell.category_image3.image = [UIImage imageNamed:@"lable2.png"];
+                        c++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+        }
+        
     } else {
         switch (indexPath.row) {
             /*
@@ -242,8 +384,13 @@
             */
             case 0:{
                 cell.backgroundColor = [UIColor colorWithRed:1 green:0.96078437566757202 blue:0.79607850313186646 alpha:1];
-                [cell.contentView addSubview:segment1];
-                [cell.contentView addSubview:segment2];
+                //[cell.contentView addSubview:segment1];
+                //[cell.contentView addSubview:segment2];
+                [cell.contentView addSubview:filteringBtn1];
+                [cell.contentView addSubview:filteringBtn2];
+                [cell.contentView addSubview:filteringBtn3];
+                [cell.contentView addSubview:sortBtn1];
+                [cell.contentView addSubview:sortBtn2];
                 break;
             }
             default:
@@ -283,6 +430,101 @@
                     cell.obi_image.image = [UIImage imageNamed:@"new.png"];
                 }
 
+                cell.category_image1.image = nil;
+                cell.category_image2.image = nil;
+                cell.category_image3.image = nil;
+                
+                NSMutableArray *category_array = [[NSMutableArray alloc] init];
+                if([[banner objectForKey:@"is_limit"] intValue] == 1){
+                    [category_array addObject:@"is_limit"];
+                }
+                if([[banner objectForKey:@"is_up"] intValue] == 1){
+                    [category_array addObject:@"is_up"];
+                }
+                if([[banner objectForKey:@"is_exclusive"] intValue] == 1){
+                    [category_array addObject:@"is_exclusive"];
+                }
+                if([[banner objectForKey:@"is_revival"] intValue] == 1){
+                    [category_array addObject:@"is_revival"];
+                }
+                int c = 1;
+                for(NSString *category_key in category_array){
+                    
+                    if([category_key isEqualToString:@"is_limit"]){
+                        switch (c) {
+                            case 1:
+                                cell.category_image1.image = [UIImage imageNamed:@"lable1.png"];
+                                c++;
+                                break;
+                            case 2:
+                                cell.category_image2.image = [UIImage imageNamed:@"lable1.png"];
+                                c++;
+                                break;
+                            case 3:
+                                cell.category_image3.image = [UIImage imageNamed:@"lable1.png"];
+                                c++;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if([category_key isEqualToString:@"is_up"]){
+                        switch (c) {
+                            case 1:
+                                cell.category_image1.image = [UIImage imageNamed:@"lable4.png"];
+                                c++;
+                                break;
+                            case 2:
+                                cell.category_image2.image = [UIImage imageNamed:@"lable4.png"];
+                                c++;
+                                break;
+                            case 3:
+                                cell.category_image3.image = [UIImage imageNamed:@"lable4.png"];
+                                c++;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if([category_key isEqualToString:@"is_exclusive"]){
+                        switch (c) {
+                            case 1:
+                                cell.category_image1.image = [UIImage imageNamed:@"lable3.png"];
+                                c++;
+                                break;
+                            case 2:
+                                cell.category_image2.image = [UIImage imageNamed:@"lable3.png"];
+                                c++;
+                                break;
+                            case 3:
+                                cell.category_image3.image = [UIImage imageNamed:@"lable3.png"];
+                                c++;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if([category_key isEqualToString:@"is_revival"]){
+                        switch (c) {
+                            case 1:
+                                cell.category_image1.image = [UIImage imageNamed:@"lable2.png"];
+                                c++;
+                                break;
+                            case 2:
+                                cell.category_image2.image = [UIImage imageNamed:@"lable2.png"];
+                                c++;
+                                break;
+                            case 3:
+                                cell.category_image3.image = [UIImage imageNamed:@"lable2.png"];
+                                c++;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    
+                }
+                
                 break;
             }
         }
@@ -320,6 +562,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == 1 && indexPath.row == 0){
+        return 95;
+    }
     switch (indexPath.section) {
         case 0:
             return 100;
@@ -332,36 +577,84 @@
 }
 
 -(void)segmentDidChange:(id)sender{
+    /*
     _progress = [[MBProgressHUD alloc] initWithView:self.view];
     _progress.labelText = @"読み込み中";
     [self.view addSubview:_progress];
     [_progress show:YES];
+    */
+    if(sender != nil){
+        switch ([sender tag]) {
+            case 1:
+                filteringStatus = 1;
+                break;
+            case 2:
+                filteringStatus = 2;
+                break;
+            case 3:
+                filteringStatus = 3;
+            case 4:
+                sortStatus = 1;
+                break;
+            case 5:
+                sortStatus = 2;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if(filteringStatus == 0 || filteringStatus > 3 || filteringStatus < 0){
+        filteringStatus = 1;
+    }
+    if (sortStatus == 0 || sortStatus > 2 || sortStatus < 0) {
+        sortStatus = 1;
+    }
     
     NSString *category = @"DL";
     NSString *sort = @"NEW";
-    switch (segment1.selectedSegmentIndex) {
-        case 0:
-            category = @"DL";
-            break;
+    
+    switch (filteringStatus) {
         case 1:
-            category = @"HIGH";
+            category = @"DL";
+            [filteringBtn1 setBackgroundImage:[UIImage imageNamed:@"button1-2.png"] forState:UIControlStateNormal];
+            [filteringBtn2 setBackgroundImage:[UIImage imageNamed:@"button3.png"] forState:UIControlStateNormal];
+            [filteringBtn3 setBackgroundImage:[UIImage imageNamed:@"button2.png"] forState:UIControlStateNormal];
             break;
         case 2:
+            category = @"HIGH";
+            [filteringBtn1 setBackgroundImage:[UIImage imageNamed:@"button1.png"] forState:UIControlStateNormal];
+            [filteringBtn2 setBackgroundImage:[UIImage imageNamed:@"button3-3.png"] forState:UIControlStateNormal];
+            [filteringBtn3 setBackgroundImage:[UIImage imageNamed:@"button2.png"] forState:UIControlStateNormal];
+            break;
+        case 3:
             category = @"OTHER";
+            [filteringBtn1 setBackgroundImage:[UIImage imageNamed:@"button1.png"] forState:UIControlStateNormal];
+            [filteringBtn2 setBackgroundImage:[UIImage imageNamed:@"button3.png"] forState:UIControlStateNormal];
+            [filteringBtn3 setBackgroundImage:[UIImage imageNamed:@"button2-2.png"] forState:UIControlStateNormal];
             break;
         default:
             category = @"DL";
+            [filteringBtn1 setBackgroundImage:[UIImage imageNamed:@"button1-2.png"] forState:UIControlStateNormal];
+            [filteringBtn2 setBackgroundImage:[UIImage imageNamed:@"button3.png"] forState:UIControlStateNormal];
+            [filteringBtn3 setBackgroundImage:[UIImage imageNamed:@"button2.png"] forState:UIControlStateNormal];
             break;
     }
-    switch (segment2.selectedSegmentIndex) {
-        case 0:
-            sort = @"NEW";
-            break;
+    switch (sortStatus) {
         case 1:
+            sort = @"NEW";
+            [sortBtn1 setBackgroundImage:[UIImage imageNamed:@"Segment2-2.png"] forState:UIControlStateNormal];
+            [sortBtn2 setBackgroundImage:[UIImage imageNamed:@"Segment1.png"] forState:UIControlStateNormal];
+            break;
+        case 2:
             sort = @"POINT";
+            [sortBtn1 setBackgroundImage:[UIImage imageNamed:@"Segment2.png"] forState:UIControlStateNormal];
+            [sortBtn2 setBackgroundImage:[UIImage imageNamed:@"Segment1-2.png"] forState:UIControlStateNormal];
             break;
         default:
             sort = @"NEW";
+            [sortBtn1 setBackgroundImage:[UIImage imageNamed:@"Segment2-2.png"] forState:UIControlStateNormal];
+            [sortBtn2 setBackgroundImage:[UIImage imageNamed:@"Segment1.png"] forState:UIControlStateNormal];
             break;
     }
     
@@ -369,7 +662,7 @@
     bannerInfo = [apiUtil getBanner:category sort:sort];
     [self.tableView reloadData];
     
-    [_progress hide:YES];
+    //[_progress hide:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -378,4 +671,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)popupNewPointView:(NSString *) point {
+    newPointView = [[NewPointViewController alloc] init];
+    [self.tabBarController.view addSubview:newPointView.view];
+    NSLog(@"newpointview");
+    newPointView.PointLabel.text = point;
+    
+    [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(hideNewPointView:) userInfo:nil repeats:NO];
+    
+    
+}
+- (void)hideNewPointView:(NSTimer *)timer {
+    NSLog(@"hideNewPoint");
+    [newPointView.view removeFromSuperview];
+}
 @end
