@@ -442,9 +442,9 @@
     CGSize offSize = [UIScreen mainScreen].bounds.size;
     CGPoint offScreenCenter = CGPointMake(offSize.width/2.0, offSize.height * 1.5);
     pickerView.center = offScreenCenter;
-    
+
     [mainWindow addSubview:pickerView];
-    
+
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.5];
     pickerView.center = middleCenter;

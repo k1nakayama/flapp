@@ -32,6 +32,18 @@
     // Do any additional setup after loading the view from its nib.
     self.picker.delegate = self;
     self.picker.dataSource = self;
+
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, -44, 320, 44)];
+    toolBar.barStyle = UIBarStyleDefault;
+    [toolBar sizeToFit];
+    
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"完了" style:UIBarButtonItemStyleDone target:self action:@selector(closePickerView:)];
+    
+    NSArray *items = [NSArray arrayWithObjects:spacer,done, nil];
+    [toolBar setItems:items animated:YES];
+    [self.picker addSubview:toolBar];
+    
     [self.picker selectRow:selectedValue inComponent:0 animated:NO];
     
 }

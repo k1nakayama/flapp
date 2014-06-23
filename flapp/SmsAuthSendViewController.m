@@ -31,6 +31,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
 
     }
     return self;
@@ -40,6 +41,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationItem.title = @"本人認証";
+    //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1 green:0.96078437566757202 blue:0.79607850313186646 alpha:1];
+    //self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:1 green:0.96078437566757202 blue:0.79607850313186646 alpha:1];
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
+    
     self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSingleTap:)];
     self.singleTap.delegate = self;
     self.singleTap.numberOfTapsRequired = 1;
@@ -85,8 +92,8 @@
         NSLog(@"authRequest: %@",authRequest);
         //[NSThread sleepForTimeInterval:3.0f];
         [_progress hide:YES];
-
         AuthCodeViewController *authCodeVC = [[AuthCodeViewController alloc] init];
+        NSLog(@"didEndPhonenumber3");
         [self.navigationController pushViewController:authCodeVC animated:YES];
     }
 }
