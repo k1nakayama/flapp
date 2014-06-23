@@ -8,6 +8,7 @@
 
 #import "PointExchangeViewController.h"
 #import "AppApiUtil.h"
+#import "UIImageView+WebCache.h"
 
 @interface PointExchangeViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -73,9 +74,12 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     NSURL *giftThumbnailUrl = [NSURL URLWithString:[gift_detail objectForKey:@"gift_thumbnail"]];
+    /*
     NSData *giftImgData = [NSData dataWithContentsOfURL:giftThumbnailUrl];
     UIImage *giftImage = [UIImage imageWithData:giftImgData];
     cell.gift_thumbnail.image = giftImage;
+    */
+    [cell.gift_thumbnail sd_setImageWithURL:giftThumbnailUrl];
 
     cell.min_point_label.text = [NSString stringWithFormat:@"%@pt〜",[gift_detail objectForKey:@"min_point"]];
     //PointExchangeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];

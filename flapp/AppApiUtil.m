@@ -8,6 +8,8 @@
 
 #import "AppApiUtil.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
 
 @implementation AppApiUtil{
     NSString *site_code;
@@ -21,16 +23,38 @@
     //NSString *user_id = @"123456789012345";
     NSString *date = [self dateWithMyFormat];
     //NSString *signature = @"aaa";
-    //パラメータの配列を作成
-    NSMutableDictionary *param_list = [NSMutableDictionary dictionaryWithObjectsAndKeys:site_code,
-    @"site_code",user_id,@"user_id",category,@"category",sort,@"sort",date, @"transaction_date",nil];
+    
+    CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
+    CTCarrier *carrier = [netinfo subscriberCellularProvider];
+    //NSLog(@"getBanner Carrier: %@",carrier);
+    
+    NSString *carrierName;
+    if([carrier.mobileNetworkCode isEqualToString:@"00"]) {
+        carrierName = @"EMOBILE";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"10"]){
+        carrierName = @"DOCOMO";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"20"]){
+        carrierName = @"SOFTBANK";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"50"]){
+        carrierName = @"KDDI";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"54"]){
+        carrierName = @"KDDI";
+    } else {
+        carrierName = @"OTHER";
+    }
 
+    //パラメータの配列を作成
+    //NSMutableDictionary *param_list = [NSMutableDictionary dictionaryWithObjectsAndKeys:site_code,
+    //@"site_code",user_id,@"user_id",category,@"category",sort,@"sort",date, @"transaction_date",nil];
+    NSMutableDictionary *param_list = [NSMutableDictionary dictionaryWithObjectsAndKeys:site_code,
+    @"site_code",user_id,@"user_id",carrierName,@"carrier",date, @"transaction_date",nil];
     NSMutableArray *param_list2 = [[NSMutableArray alloc]init];
     [param_list2 insertObject:[param_list objectForKey:@"site_code"] atIndex:0];
     [param_list2 insertObject:[param_list objectForKey:@"user_id"] atIndex:1];
-    [param_list2 insertObject:[param_list objectForKey:@"category"] atIndex:2];
-    [param_list2 insertObject:[param_list objectForKey:@"sort"] atIndex:3];
-    [param_list2 insertObject:[param_list objectForKey:@"transaction_date"] atIndex:4];
+    //[param_list2 insertObject:[param_list objectForKey:@"category"] atIndex:2];
+    //[param_list2 insertObject:[param_list objectForKey:@"sort"] atIndex:3];
+    [param_list2 insertObject:[param_list objectForKey:@"carrier"] atIndex:2];
+    [param_list2 insertObject:[param_list objectForKey:@"transaction_date"] atIndex:3];
     NSString *signature = [self createSignature:param_list2];
     [param_list setObject:signature forKey:@"signature"];
     NSData *json_data = [self createJsonObject:param_list];
@@ -63,14 +87,35 @@
     //NSString *user_id = @"123456789012345";
     NSString *date = [self dateWithMyFormat];
     //NSString *signature = @"aaa";
+
+    CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
+    CTCarrier *carrier = [netinfo subscriberCellularProvider];
+    NSLog(@"getBanner Carrier: %@",carrier);
+    
+    NSString *carrierName;
+    if([carrier.mobileNetworkCode isEqualToString:@"00"]) {
+        carrierName = @"EMOBILE";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"10"]){
+        carrierName = @"DOCOMO";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"20"]){
+        carrierName = @"SOFTBANK";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"50"]){
+        carrierName = @"KDDI";
+    } else if([carrier.mobileNetworkCode isEqualToString:@"54"]){
+        carrierName = @"KDDI";
+    } else {
+        carrierName = @"OTHER";
+    }
+    
     //パラメータの配列を作成
     NSMutableDictionary *param_list = [NSMutableDictionary dictionaryWithObjectsAndKeys:site_code,
-                                       @"site_code",user_id,@"user_id",date, @"transaction_date",nil];
+                                       @"site_code",user_id,@"user_id",carrierName,@"carrier",date, @"transaction_date",nil];
     
     NSMutableArray *param_list2 = [[NSMutableArray alloc]init];
     [param_list2 insertObject:[param_list objectForKey:@"site_code"] atIndex:0];
     [param_list2 insertObject:[param_list objectForKey:@"user_id"] atIndex:1];
-    [param_list2 insertObject:[param_list objectForKey:@"transaction_date"] atIndex:2];
+    [param_list2 insertObject:[param_list objectForKey:@"carrier"] atIndex:2];
+    [param_list2 insertObject:[param_list objectForKey:@"transaction_date"] atIndex:3];
     NSString *signature = [self createSignature:param_list2];
     [param_list setObject:signature forKey:@"signature"];
     NSData *json_data = [self createJsonObject:param_list];

@@ -11,6 +11,7 @@
 #import "JDFlipNumberView.h"
 #import "BannerDetailViewController.h"
 #import "NewPointViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface BannerListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -23,6 +24,7 @@
 
 @implementation BannerListViewController{
     NSArray *bannerInfo;
+    NSArray *viewBannerInfo;
     NSArray *recommendInfo;
     NSDictionary *userInfo;
     //UISegmentedControl *segment1;
@@ -36,6 +38,7 @@
     UIButton *sortBtn2;
     int filteringStatus;
     int sortStatus;
+    AppApiUtil *apiUtil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,7 +47,7 @@
     if (self) {
         // Custom initialization
         //self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"貯める" image:[UIImage imageNamed:@"money"] tag:1];
-        
+        NSLog(@"exec nibNameOrNil");
         UIImage *unselectImg = [[UIImage imageNamed:@"footer11"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIImage *selectImg = [[UIImage imageNamed:@"footer10"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"貯める" image:unselectImg tag:1];
@@ -58,21 +61,30 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSLog(@"exec viewDidLoad");
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     //self.navigationItem.title = @"ポイント忍者くん";
     //UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320,44)];
     //[navigationBar sizeToFit];
+    
     UIImageView *navigationTitle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_type02_2.png"]];
-    //[navigationTitle sizeToFit];
-    //navigationTitle.frame = CGRectMake(80, 10, 160, 20);
+
+    //UIView *titleview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+    //titleview.opaque = NO;
+    //self.navigationItem.titleView = titleview;
     self.navigationItem.titleView = navigationTitle;
+    
+    //UILabel *titlelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 195, 20)];
+    //titlelabel.text = @"test";
+    //[titleview addSubview:titlelabel];
     
     //self.navigationController.navigationBar.backgroundColor = [UIColor orangeColor];
     //self.navigationController.navigationBar.barTintColor = [UIColor orangeColor];
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
+    
     //self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1.0 green:0.597 blue:0.199 alpha:1.0];
     //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:1.0 green:0.597 blue:0.199 alpha:1.0];
     
@@ -135,15 +147,21 @@
      
 }
 -(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"exec viewWillAppear");
     _progress = [[MBProgressHUD alloc] initWithView:self.view];
     _progress.labelText = @"読み込み中";
     [self.view addSubview:_progress];
     [_progress show:YES];
      
-    AppApiUtil *apiUtil = [[AppApiUtil alloc] init];
+    apiUtil = [[AppApiUtil alloc] init];
+
+    /*
     recommendInfo = [apiUtil getRecommended];
     bannerInfo = [apiUtil getBanner];
-    [self.tableView reloadData];
+    */
+    recommendInfo = nil;
+    bannerInfo = nil;
+    //[self.tableView reloadData];
     
     userInfo = [apiUtil getUserInfo];
     //NSLog(@"userInfo:%@",userInfo);
@@ -183,9 +201,9 @@
         NSMutableString *gradeup_str = [NSMutableString string];
         [gradeup_str appendString:@"あと"];
         [gradeup_str appendString:[NSString stringWithFormat:@"%d",[[userInfo objectForKey:@"grade_up_point"] intValue]]];
-        [gradeup_str appendString:@"G獲得で来月"];
+        [gradeup_str appendString:@"Gで来月『"];
         [gradeup_str appendString:[userInfo objectForKey:@"next_grade"]];
-        [gradeup_str appendString:@"確定!"];
+        [gradeup_str appendString:@"』ランク確定"];
         //gradeup_label = [[UILabel alloc] initWithFrame:CGRectMake(20, 4, 280, 30)];
         self.nextStageLabel.text = gradeup_str;
         self.nextStageLabel.font = [UIFont systemFontOfSize:15.0f];
@@ -193,8 +211,14 @@
         self.nextStageLabel.backgroundColor = [UIColor whiteColor];
     }
     
-    [self segmentDidChange:nil];
+    //[self segmentDidChange:nil];
     
+    //NSLog(@"bannerInfo: %lu",(unsigned long)[bannerInfo count]);
+}
+-(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"exec viewDidAppear");
+    [self segmentDidChange:nil];
+
     //新着ポイントをチェック
     NSDictionary *newPointResult = [apiUtil checkNewPoint];
     if([[newPointResult objectForKey:@"detail_code"] isEqualToString:@"00"]){
@@ -203,31 +227,44 @@
         [self popupNewPointView:[newPointResult objectForKey:@"new_point"]];
     }
     
-    //NSLog(@"bannerInfo: %lu",(unsigned long)[bannerInfo count]);
-}
--(void)viewDidAppear:(BOOL)animated{
     [_progress hide:YES];
 }
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
+    NSLog(@"exec didSelectViewController");
+    if(apiUtil == nil){
+        apiUtil = [[AppApiUtil alloc] init];
+    }
+    recommendInfo = [apiUtil getRecommended];
+    NSString *category = @"DL";
+    NSString *sort = @"NEW";
+    bannerInfo = [apiUtil getBanner:category sort:sort];
+}
+
 -(void)hudWasHidden:(MBProgressHUD *)hud{
+    NSLog(@"exec hudWasHidden");
     [_progress removeFromSuperview];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    NSLog(@"exec numberOfSectionsInTableView");
     return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSLog(@"exec numberOfRowsInSection");
     switch (section) {
         case 0:
             return recommendInfo.count;
             break;
         case 1:
-            return bannerInfo.count+1;
+            //return bannerInfo.count+1;
+            return viewBannerInfo.count+1;
         default:
             break;
     }
     return 0;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"exec cellForRowAtIndexPath");
 
     NSString *identifier;
     if(indexPath.section == 0){
@@ -251,6 +288,34 @@
         cell.title.text = [banner objectForKey:@"title"];
         cell.condition.text = [banner objectForKey:@"affiliate_condition"];
         cell.point.text = [NSString stringWithFormat:@"%@G",[banner objectForKey:@"point"]];
+
+        if([banner objectForKey:@"image_url"] != [NSNull null] && [[banner objectForKey:@"image_url"] length] > 0 ){
+            
+            NSURL *bnrImgUrl = [NSURL URLWithString:[banner objectForKey:@"image_url"]];
+            UIImage *placeholderImage = [UIImage imageNamed:@"nowprinting.png"];
+            [cell.bnr_image sd_setImageWithURL:bnrImgUrl placeholderImage:placeholderImage options:SDWebImageCacheMemoryOnly];
+            
+            /*
+             dispatch_queue_t q_global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+             dispatch_queue_t q_main = dispatch_get_main_queue();
+             
+             cell.bnr_image.image = nil;
+             
+             dispatch_async(q_global, ^{
+             NSURL *bnrImgUrl = [NSURL URLWithString:[banner objectForKey:@"image_url"]];
+             NSData *bnrImgData = [NSData dataWithContentsOfURL:bnrImgUrl];
+             UIImage *bnrImage = [UIImage imageWithData:bnrImgData];
+             
+             dispatch_async(q_main, ^{
+             cell.bnr_image.image = bnrImage;
+             });
+             });
+             */
+        } else {
+            UIImage *placeholderImage = [UIImage imageNamed:@"nowprinting.png"];
+            cell.bnr_image.image = placeholderImage;
+        }
+        /*
         if([banner objectForKey:@"image_url"] != [NSNull null] && [[banner objectForKey:@"image_url"] length] > 0 ){
             
             dispatch_queue_t q_global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -268,6 +333,7 @@
                 });
             });
         }
+        */
 
         if([[banner objectForKey:@"is_high"] intValue] == 1){
             cell.obi_image.image = [UIImage imageNamed:@"high.png"];
@@ -396,7 +462,8 @@
             default:
             {
                 int banner_row = (int)indexPath.row - 1;
-                NSDictionary *banner = [bannerInfo objectAtIndex:banner_row];
+                NSDictionary *banner = [viewBannerInfo objectAtIndex:banner_row];
+                //NSDictionary *banner = [bannerInfo objectAtIndex:banner_row];
                 
                 cell.backgroundColor = [UIColor clearColor];
                 
@@ -404,8 +471,14 @@
                 cell.title.text = [banner objectForKey:@"title"];
                 cell.condition.text = [banner objectForKey:@"affiliate_condition"];
                 cell.point.text = [NSString stringWithFormat:@"%@G",[banner objectForKey:@"point"]];
+                
                 if([banner objectForKey:@"image_url"] != [NSNull null] && [[banner objectForKey:@"image_url"] length] > 0 ){
                     
+                    NSURL *bnrImgUrl = [NSURL URLWithString:[banner objectForKey:@"image_url"]];
+                    UIImage *placeholderImage = [UIImage imageNamed:@"nowprinting.png"];
+                    [cell.bnr_image sd_setImageWithURL:bnrImgUrl placeholderImage:placeholderImage options:SDWebImageCacheMemoryOnly];
+
+                    /*
                     dispatch_queue_t q_global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
                     dispatch_queue_t q_main = dispatch_get_main_queue();
                     
@@ -420,7 +493,12 @@
                             cell.bnr_image.image = bnrImage;
                         });
                     });
+                    */
+                } else {
+                    UIImage *placeholderImage = [UIImage imageNamed:@"nowprinting.png"];
+                    cell.bnr_image.image = placeholderImage;
                 }
+
                 
                 if([[banner objectForKey:@"is_high"] intValue] == 1){
                     cell.obi_image.image = [UIImage imageNamed:@"high.png"];
@@ -550,7 +628,8 @@
         {
             if(indexPath.row > 0){
                 int banner_row = (int)indexPath.row - 1;
-                NSDictionary *banner = [bannerInfo objectAtIndex:banner_row];
+                //NSDictionary *banner = [bannerInfo objectAtIndex:banner_row];
+                NSDictionary *banner = [viewBannerInfo objectAtIndex:banner_row];
                 BannerDetailViewController *bannerDetailVC = [[BannerDetailViewController alloc] init];
                 [bannerDetailVC setBannerDetail:banner];
                 [bannerDetailVC setUserInfo:userInfo];
@@ -562,6 +641,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"exec heightForRowAtIndexPath");
     if(indexPath.section == 1 && indexPath.row == 0){
         return 95;
     }
@@ -604,6 +684,7 @@
         }
     }
     
+    NSLog(@"didChangeSegment filterlingStatus %d",filteringStatus);
     if(filteringStatus == 0 || filteringStatus > 3 || filteringStatus < 0){
         filteringStatus = 1;
     }
@@ -658,8 +739,16 @@
             break;
     }
     
-    AppApiUtil *apiUtil = [[AppApiUtil alloc] init];
-    bannerInfo = [apiUtil getBanner:category sort:sort];
+    //apiUtil = [[AppApiUtil alloc] init];
+    NSLog(@"didChangeSegment recommendInfo %@",recommendInfo);
+    if(recommendInfo == nil){
+        recommendInfo = [apiUtil getRecommended];
+    }
+    if(bannerInfo == nil){
+        bannerInfo = [apiUtil getBanner:category sort:sort];
+    }
+    viewBannerInfo =[self bannerFilteringAndSort];
+    //bannerInfo = nil;
     [self.tableView reloadData];
     
     //[_progress hide:YES];
@@ -685,4 +774,41 @@
     NSLog(@"hideNewPoint");
     [newPointView.view removeFromSuperview];
 }
+
+- (NSArray *) bannerFilteringAndSort{
+    if(filteringStatus == 0 || filteringStatus > 3 || filteringStatus < 0){
+        sortStatus = 1;
+    }
+    if (sortStatus == 0 || sortStatus > 2 || sortStatus < 0) {
+        sortStatus = 1;
+    }
+    NSString *filtering;
+    switch (filteringStatus) {
+        case 1:
+            filtering = @"DL";
+            break;
+        case 2:
+            filtering = @"REG";
+            break;
+        case 3:
+            filtering = @"OTHER";
+            break;
+    }
+    NSMutableArray *pickup_banner = [NSMutableArray array];
+    for (NSDictionary *banner in  bannerInfo) {
+        if([[banner objectForKey:@"category"] isEqualToString:filtering]){
+            [pickup_banner addObject:banner];
+        }
+    }
+    
+    if(sortStatus == 1){
+        return pickup_banner;
+    } else {
+        NSSortDescriptor *sortDescNumber = [[NSSortDescriptor alloc] initWithKey:@"point" ascending:NO];
+        NSArray *sortDescArray = [NSArray arrayWithObjects:sortDescNumber, nil];
+        return [pickup_banner sortedArrayUsingDescriptors:sortDescArray];
+    }
+    return pickup_banner;
+}
+
 @end

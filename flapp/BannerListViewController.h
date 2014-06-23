@@ -10,7 +10,7 @@
 #import "BannerListViewCell.h"
 #import "MBProgressHUD.h"
 
-@interface BannerListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
+@interface BannerListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,UITabBarControllerDelegate>{
     MBProgressHUD *_progress;
 }
 
