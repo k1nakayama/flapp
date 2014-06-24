@@ -53,7 +53,16 @@
     [self.view addGestureRecognizer:self.singleTap];
     self.phonenumber.delegate = self;
     
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolBar.barStyle = UIBarStyleDefault;
+    [toolBar sizeToFit];
     
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"完了" style:UIBarButtonItemStyleDone target:self action:@selector(closeKeybord:)];
+    NSArray *items = [NSArray arrayWithObjects:spacer,done, nil];
+    [toolBar setItems:items animated:YES];
+    
+    self.phonenumber.inputAccessoryView = toolBar;
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
@@ -63,6 +72,9 @@
 }
 
 -(void)onSingleTap:(UITapGestureRecognizer *)recognizer {
+    [self.phonenumber resignFirstResponder];
+}
+-(void)closeKeybord:(id)sender {
     [self.phonenumber resignFirstResponder];
 }
 
@@ -93,7 +105,11 @@
         //[NSThread sleepForTimeInterval:3.0f];
         [_progress hide:YES];
         AuthCodeViewController *authCodeVC = [[AuthCodeViewController alloc] init];
-        NSLog(@"didEndPhonenumber3");
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+        backButton.title = @"戻る";
+        self.navigationItem.backBarButtonItem = backButton;
+        
         [self.navigationController pushViewController:authCodeVC animated:YES];
     }
 }

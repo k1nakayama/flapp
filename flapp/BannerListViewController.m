@@ -613,6 +613,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.title = @"戻る";
+    self.navigationItem.backBarButtonItem = backButton;
+    
     switch (indexPath.section) {
         case 0:
         {

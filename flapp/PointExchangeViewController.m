@@ -91,6 +91,10 @@
 
     ExchangeInputViewController *exchangeInputViewController = [[ExchangeInputViewController alloc] init];
     
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.title = @"戻る";
+    self.navigationItem.backBarButtonItem = backButton;
+    
     [exchangeInputViewController setGiftDetail:[gift_list objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:exchangeInputViewController animated:YES];
 

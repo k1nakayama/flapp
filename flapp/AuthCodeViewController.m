@@ -45,6 +45,17 @@
     self.singleTap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:self.singleTap];
     self.authcode.delegate = self;
+
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolBar.barStyle = UIBarStyleDefault;
+    [toolBar sizeToFit];
+    
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"完了" style:UIBarButtonItemStyleDone target:self action:@selector(closeKeybord:)];
+    NSArray *items = [NSArray arrayWithObjects:spacer,done, nil];
+    [toolBar setItems:items animated:YES];
+    
+    self.authcode.inputAccessoryView = toolBar;
     
     self.navigationItem.title = @"認証コード送信完了";
     self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
@@ -76,6 +87,10 @@
 }
 
 -(void)onSingleTap:(UITapGestureRecognizer *)recognizer {
+    [self.authcode resignFirstResponder];
+}
+
+-(void)closeKeybord:(id)sender {
     [self.authcode resignFirstResponder];
 }
 
