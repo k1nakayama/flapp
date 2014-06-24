@@ -14,6 +14,7 @@
 #import "NoticePopupViewController.h"
 #import "IssueGiftViewController.h"
 #import "AppDelegate.h"
+#import "UIImageView+WebCache.h"
 
 @interface ExchangeInputViewController ()<ConfirmPopupDelegate,NoticePopupDelegate,UIWebViewDelegate,UITextFieldDelegate>{
     NSDictionary *userInfo;
@@ -127,9 +128,10 @@
         titleImageView.center = CGPointMake(160, 45);
 
         NSURL *titleUrl = [NSURL URLWithString:[giftDetail objectForKey:@"title_image"]];
-        NSData *titleImgData = [NSData dataWithContentsOfURL:titleUrl];
-        UIImage *titleImage = [UIImage imageWithData:titleImgData];
-        titleImageView.image = titleImage;
+        //NSData *titleImgData = [NSData dataWithContentsOfURL:titleUrl];
+        //UIImage *titleImage = [UIImage imageWithData:titleImgData];
+        [titleImageView sd_setImageWithURL:titleUrl];
+        //titleImageView.image = titleImage;
         titleImageView.contentMode = UIViewContentModeScaleAspectFit;
         [cell.contentView addSubview:titleImageView];
     } else if([cell_type isEqualToString:@"upper_introduction"]){
@@ -147,14 +149,14 @@
         totalView.center = CGPointMake(160, 45);
 
         UILabel *totalPointDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 141, 21)];
-        totalPointDescLabel.text = @"交換ポイント合計：";
+        totalPointDescLabel.text = @"交換ゴールド合計：";
         totalPointDescLabel.font = [UIFont systemFontOfSize:15.0f];
         totalPointDescLabel.adjustsFontSizeToFitWidth = YES;
         totalPointDescLabel.textAlignment = NSTextAlignmentRight;
         [totalView addSubview:totalPointDescLabel];
         
         UILabel *remainPointDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 53, 141, 21)];
-        remainPointDescLabel.text = @"残ポイント：";
+        remainPointDescLabel.text = @"残ゴールド：";
         remainPointDescLabel.font = [UIFont systemFontOfSize:15.0f];
         remainPointDescLabel.adjustsFontSizeToFitWidth = YES;
         remainPointDescLabel.textAlignment = NSTextAlignmentRight;
@@ -168,7 +170,7 @@
         [totalView addSubview:borderLabel];
 
         self.totalPointLabel = [[UILabel alloc] initWithFrame:CGRectMake(169, 16, 107, 21)];
-        self.totalPointLabel.text = @"0pt";
+        self.totalPointLabel.text = [NSString stringWithFormat:@"0%@",POINT_UNIT];
         self.totalPointLabel.font = [UIFont systemFontOfSize:17.0f];
         self.totalPointLabel.textColor = [UIColor redColor];
         self.totalPointLabel.adjustsFontSizeToFitWidth = YES;
@@ -184,7 +186,7 @@
         [formatter setGroupingSeparator:@","];
         [formatter setGroupingSize:3];
         
-        self.remainPointLabel.text = [NSString stringWithFormat:@"%@pt",[formatter stringFromNumber:remainPoint]];
+        self.remainPointLabel.text = [NSString stringWithFormat:@"%@%@",[formatter stringFromNumber:remainPoint],POINT_UNIT];
         self.remainPointLabel.font = [UIFont systemFontOfSize:17.0f];
         self.remainPointLabel.textColor = [UIColor redColor];
         self.remainPointLabel.adjustsFontSizeToFitWidth = YES;
@@ -220,7 +222,8 @@
             [self.exchange_button setTitle:@"本人認証を行う" forState:UIControlStateNormal];
             [self.exchange_button setBackgroundColor:[UIColor blueColor]];
         } else {
-            [self.exchange_button setTitle:@"この内容で交換する" forState:UIControlStateNormal];
+            
+            [self.exchange_button setTitle:[giftDetail objectForKey:@"button_title"] forState:UIControlStateNormal];
             [self.exchange_button setBackgroundColor:[UIColor redColor]];
         }
         [self.exchange_button addTarget:self action:@selector(pressExchangeButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -260,7 +263,7 @@
             [giftUnitView addSubview:giftUnitNumLabel];
 
             UILabel *ptLabel = [[UILabel alloc] initWithFrame:CGRectMake(92, 60, 28, 21)];
-            ptLabel.text = @"G";
+            ptLabel.text = POINT_UNIT;
             ptLabel.font = [UIFont systemFontOfSize:17.0];
             ptLabel.adjustsFontSizeToFitWidth = YES;
             ptLabel.textAlignment = NSTextAlignmentCenter;
@@ -296,30 +299,12 @@
         }
     }
     
-    /*
-    NSLog(@"gift_list %@",gift_list);
-    NSDictionary *gift_detail = [gift_list objectAtIndex:indexPath.row];
-    PointExchangeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    
-    NSURL *giftThumbnailUrl = [NSURL URLWithString:[gift_detail objectForKey:@"gift_thumbnail"]];
-    NSData *giftImgData = [NSData dataWithContentsOfURL:giftThumbnailUrl];
-    UIImage *giftImage = [UIImage imageWithData:giftImgData];
-    cell.gift_thumbnail.image = giftImage;
-    
-    cell.min_point_label.text = [NSString stringWithFormat:@"%@pt〜",[gift_detail objectForKey:@"min_point"]];
-    //PointExchangeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    */
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    /*
-    ExchangeInputViewController *exchangeInputViewController = [[ExchangeInputViewController alloc] init];
-    
-    [exchangeInputViewController setGiftDetail:[gift_list objectAtIndex:indexPath.row]];
-    [self.navigationController pushViewController:exchangeInputViewController animated:YES];
-    */
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -401,7 +386,7 @@
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
     NoticePopupViewController *noticePopupVC = [[NoticePopupViewController alloc] initWithNibName:@"NoticePopupViewController" bundle:nil];
     noticePopupVC.delegate = self;
-    [noticePopupVC setNotice:@"ポイント交換が完了しました！"];
+    [noticePopupVC setNotice:@"交換が完了しました！"];
     void (^afterDismissPopup)(void) = ^(void){
         NSLog(@"afterDismissPopup");
         IssueGiftViewController *issueGiftVC = [[IssueGiftViewController alloc] init];
@@ -497,12 +482,12 @@
     [formatter setGroupingSeparator:@","];
     [formatter setGroupingSize:3];
     
-    self.totalPointLabel.text = [NSString stringWithFormat:@"%@pt",[formatter stringFromNumber:toPoint]];
+    self.totalPointLabel.text = [NSString stringWithFormat:@"%@%@",[formatter stringFromNumber:toPoint],POINT_UNIT];
     
     int intRemainPoint = [[userInfo objectForKey:@"point"] intValue];
     intRemainPoint = intRemainPoint - totalPoint;
     NSNumber *remainPoint = [[NSNumber alloc] initWithInteger:intRemainPoint];
-    self.remainPointLabel.text = [NSString stringWithFormat:@"%@pt",[formatter stringFromNumber:remainPoint]];
+    self.remainPointLabel.text = [NSString stringWithFormat:@"%@%@",[formatter stringFromNumber:remainPoint],POINT_UNIT];
     
 }
 

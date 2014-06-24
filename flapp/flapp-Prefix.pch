@@ -21,3 +21,5 @@
 #define UUID_KEY @"jp.pocket-solution.flapp.uuid"
 #define TOKEN_KEY @"jp.pocket-solutiion.flapp.token"
 #define CHECK_KEY @"jp.pocket-solutiion.flapp.pointcheck"
+
+#define POINT_UNIT @"G"

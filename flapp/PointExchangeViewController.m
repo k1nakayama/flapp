@@ -81,7 +81,7 @@
     */
     [cell.gift_thumbnail sd_setImageWithURL:giftThumbnailUrl];
 
-    cell.min_point_label.text = [NSString stringWithFormat:@"%@pt〜",[gift_detail objectForKey:@"min_point"]];
+    cell.min_point_label.text = [NSString stringWithFormat:@"%@%@〜",[gift_detail objectForKey:@"min_point"],POINT_UNIT];
     //PointExchangeViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     return cell;
 }
