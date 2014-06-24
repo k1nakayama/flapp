@@ -10,7 +10,7 @@
 #import "AppApiUtil.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "NoticePopupViewController.h"
-
+#import "OHAttributedLabel.h"
 
 @interface AuthCodeViewController () <NoticePopupDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *authcode;
@@ -18,6 +18,7 @@
 @property (nonatomic,strong) UITapGestureRecognizer *singleTap;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 - (IBAction)pressSubmitButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *labelview;
 
 
 @end
@@ -44,6 +45,27 @@
     self.singleTap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:self.singleTap];
     self.authcode.delegate = self;
+    
+    self.navigationItem.title = @"認証コード送信完了";
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:1.0 green:0.398 blue:0 alpha:1.0];
+    
+    NSString *txt = @"SMSでお送りした認証コードを下記の欄へ入力してください。\n\n認証コードの書かれたSMSが3分ほど経っても届かない場合は、こちらから電話発信による認証をお試しください。電話での認証が成功した場合は、認証コードは入力せずに「認証する」ボタンを押してください。";
+    NSMutableAttributedString *attrStr = [NSMutableAttributedString attributedStringWithString:txt];
+    NSRange range = [txt rangeOfString:@"こちら"];
+    UIColor *color = [UIColor colorWithRed:135.0f / 255.0f green: 206.0f / 255.0f blue: 235.0f / 255.0f alpha:1.f];
+    //NSURL *linkUrl = [NSURL URLWithString:@"http://www.yahoo.co.jp/"];
+    NSURL *linkUrl = [NSURL URLWithString:@"tel:+16692313008"];
+    
+    [attrStr setLink:linkUrl range:range];
+    [attrStr setTextColor:color range:range];
+    
+    OHAttributedLabel *sampleLabel = [[OHAttributedLabel alloc] initWithFrame:CGRectMake(0, 0, self.labelview.bounds.size.width, self.labelview.bounds.size.height)];
+    sampleLabel.attributedText = attrStr;
+    sampleLabel.font = [UIFont systemFontOfSize:15.0];
+    [sampleLabel setUnderlineLinks:YES];
+    [sampleLabel setLinkColor:color];
+    [self.labelview addSubview:sampleLabel];
 
 }
 
@@ -75,6 +97,7 @@
 }
 
 - (IBAction)didEndAuthCode:(id)sender {
+    NSLog(@"didEndAuthCode start");
     AppApiUtil *apiUtil = [[AppApiUtil alloc] init];
     NSDictionary *userInfo = [apiUtil getUserInfo];
     if([[userInfo objectForKey:@"sms_status"]boolValue] == NO){
@@ -94,6 +117,17 @@
             [self presentPopupViewController:noticePopupVC animationType:MJPopupViewAnimationFade dismissed:afterDismissPopup];
         }
 
+    } else if([[userInfo objectForKey:@"sms_status"]boolValue] == YES){
+        [_progress hide:YES];
+
+        NoticePopupViewController *noticePopupVC = [[NoticePopupViewController alloc] initWithNibName:@"NoticePopupViewController" bundle:nil];
+        noticePopupVC.delegate = self;
+        [noticePopupVC setNotice:@"本人認証が完了しました"];
+        void (^afterDismissPopup)(void) = ^(void){
+            NSLog(@"afterDismissPopup");
+            [self closeView];
+        };
+        [self presentPopupViewController:noticePopupVC animationType:MJPopupViewAnimationFade dismissed:afterDismissPopup];
     }
 }
 

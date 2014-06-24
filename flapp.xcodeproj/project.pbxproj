@@ -151,6 +151,13 @@
 		25C97867195427AB00C8C8DE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C97858195427AB00C8C8DE /* UIImageView+WebCache.m */; };
 		25C9796F19542F7C00C8C8DE /* nowprint.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9796E19542F7C00C8C8DE /* nowprint.png */; };
 		25C979711954381D00C8C8DE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C979701954381D00C8C8DE /* CoreTelephony.framework */; };
+		25C9799A19590A2600C8C8DE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9799919590A2600C8C8DE /* CoreText.framework */; };
+		25C979AD19590A6500C8C8DE /* CoreTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979AC19590A6500C8C8DE /* CoreTextUtils.m */; };
+		25C979B819590A7D00C8C8DE /* NSAttributedString+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979AF19590A7D00C8C8DE /* NSAttributedString+Attributes.m */; };
+		25C979B919590A7D00C8C8DE /* NSTextCheckingResult+ExtendedURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B119590A7D00C8C8DE /* NSTextCheckingResult+ExtendedURL.m */; };
+		25C979BA19590A7D00C8C8DE /* OHAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B319590A7D00C8C8DE /* OHAttributedLabel.m */; };
+		25C979BB19590A7D00C8C8DE /* OHParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B519590A7D00C8C8DE /* OHParagraphStyle.m */; };
+		25C979BC19590A7D00C8C8DE /* OHTouchesGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B719590A7D00C8C8DE /* OHTouchesGestureRecognizer.m */; };
 		25E898E118E56E9600EE3749 /* Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E018E56E9600EE3749 /* Empty.xib */; };
 		25E898E318E57C1B00EE3749 /* total.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E218E57C1B00EE3749 /* total.xib */; };
 		25E898E718EC3A2900EE3749 /* ExchangePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E898E518EC3A2900EE3749 /* ExchangePickerViewController.m */; };
@@ -425,6 +432,19 @@
 		25C9796D19542C8500C8C8DE /* webpi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = webpi.h; sourceTree = "<group>"; };
 		25C9796E19542F7C00C8C8DE /* nowprint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nowprint.png; path = "../../../../Google ドライブ/ポイントアプリ/クライアント関連/フロントライン/画像素材/その他素材/nowprint.png"; sourceTree = "<group>"; };
 		25C979701954381D00C8C8DE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		25C9799919590A2600C8C8DE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		25C979AB19590A6500C8C8DE /* CoreTextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextUtils.h; sourceTree = "<group>"; };
+		25C979AC19590A6500C8C8DE /* CoreTextUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTextUtils.m; sourceTree = "<group>"; };
+		25C979AE19590A7D00C8C8DE /* NSAttributedString+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Attributes.h"; sourceTree = "<group>"; };
+		25C979AF19590A7D00C8C8DE /* NSAttributedString+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Attributes.m"; sourceTree = "<group>"; };
+		25C979B019590A7D00C8C8DE /* NSTextCheckingResult+ExtendedURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextCheckingResult+ExtendedURL.h"; sourceTree = "<group>"; };
+		25C979B119590A7D00C8C8DE /* NSTextCheckingResult+ExtendedURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextCheckingResult+ExtendedURL.m"; sourceTree = "<group>"; };
+		25C979B219590A7D00C8C8DE /* OHAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHAttributedLabel.h; sourceTree = "<group>"; };
+		25C979B319590A7D00C8C8DE /* OHAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHAttributedLabel.m; sourceTree = "<group>"; };
+		25C979B419590A7D00C8C8DE /* OHParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHParagraphStyle.h; sourceTree = "<group>"; };
+		25C979B519590A7D00C8C8DE /* OHParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHParagraphStyle.m; sourceTree = "<group>"; };
+		25C979B619590A7D00C8C8DE /* OHTouchesGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHTouchesGestureRecognizer.h; sourceTree = "<group>"; };
+		25C979B719590A7D00C8C8DE /* OHTouchesGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHTouchesGestureRecognizer.m; sourceTree = "<group>"; };
 		25E898E018E56E9600EE3749 /* Empty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Empty.xib; sourceTree = "<group>"; };
 		25E898E218E57C1B00EE3749 /* total.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = total.xib; sourceTree = "<group>"; };
 		25E898E418EC3A2900EE3749 /* ExchangePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangePickerViewController.h; sourceTree = "<group>"; };
@@ -457,6 +477,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25C9799A19590A2600C8C8DE /* CoreText.framework in Frameworks */,
 				25C979711954381D00C8C8DE /* CoreTelephony.framework in Frameworks */,
 				257D95D518E12B4200F742BB /* QuartzCore.framework in Frameworks */,
 				257CC77718D747FE000B0708 /* CoreGraphics.framework in Frameworks */,
@@ -500,6 +521,7 @@
 		257CC77318D747FE000B0708 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25C9799919590A2600C8C8DE /* CoreText.framework */,
 				25C979701954381D00C8C8DE /* CoreTelephony.framework */,
 				25C9788D1954285A00C8C8DE /* WebBP */,
 				257D95D418E12B4200F742BB /* QuartzCore.framework */,
@@ -632,6 +654,7 @@
 		257D95C418DAE4FC00F742BB /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				25C9799B19590A3200C8C8DE /* OHAttributedLabel */,
 				25C97839195427AB00C8C8DE /* SDWebImage */,
 				257D95D918E12B6A00F742BB /* UIViewController+MJPopupViewController.m */,
 				257D95D818E12B6A00F742BB /* UIViewController+MJPopupViewController.h */,
@@ -929,6 +952,25 @@
 			path = Vendors/libwebp/src/dec;
 			sourceTree = "<group>";
 		};
+		25C9799B19590A3200C8C8DE /* OHAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				25C979AB19590A6500C8C8DE /* CoreTextUtils.h */,
+				25C979AC19590A6500C8C8DE /* CoreTextUtils.m */,
+				25C979AE19590A7D00C8C8DE /* NSAttributedString+Attributes.h */,
+				25C979AF19590A7D00C8C8DE /* NSAttributedString+Attributes.m */,
+				25C979B019590A7D00C8C8DE /* NSTextCheckingResult+ExtendedURL.h */,
+				25C979B119590A7D00C8C8DE /* NSTextCheckingResult+ExtendedURL.m */,
+				25C979B219590A7D00C8C8DE /* OHAttributedLabel.h */,
+				25C979B319590A7D00C8C8DE /* OHAttributedLabel.m */,
+				25C979B419590A7D00C8C8DE /* OHParagraphStyle.h */,
+				25C979B519590A7D00C8C8DE /* OHParagraphStyle.m */,
+				25C979B619590A7D00C8C8DE /* OHTouchesGestureRecognizer.h */,
+				25C979B719590A7D00C8C8DE /* OHTouchesGestureRecognizer.m */,
+			);
+			name = OHAttributedLabel;
+			sourceTree = "<group>";
+		};
 		25E8990218ED76F300EE3749 /* JDFlipNumberView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1158,6 +1200,8 @@
 				25C97866195427AB00C8C8DE /* UIImageView+HighlightedWebCache.m in Sources */,
 				25C978311951829A00C8C8DE /* NPAViewController.m in Sources */,
 				257CC7B518D76A80000B0708 /* BannerListViewCell.m in Sources */,
+				25C979BB19590A7D00C8C8DE /* OHParagraphStyle.m in Sources */,
+				25C979BA19590A7D00C8C8DE /* OHAttributedLabel.m in Sources */,
 				25E898FC18ED76E600EE3749 /* JDFlipImageView.m in Sources */,
 				25C9782F1951829A00C8C8DE /* NPAItem.m in Sources */,
 				257CC7AB18D74C62000B0708 /* PointExchangeViewController.m in Sources */,
@@ -1170,6 +1214,7 @@
 				25E898E718EC3A2900EE3749 /* ExchangePickerViewController.m in Sources */,
 				25C97863195427AB00C8C8DE /* UIImage+GIF.m in Sources */,
 				25C97861195427AB00C8C8DE /* SDWebImagePrefetcher.m in Sources */,
+				25C979BC19590A7D00C8C8DE /* OHTouchesGestureRecognizer.m in Sources */,
 				257CC7B918D76B93000B0708 /* AppApiUtil.m in Sources */,
 				257CC7A618D74883000B0708 /* BannerListViewController.m in Sources */,
 				257CC7BF18D8215B000B0708 /* MenuViewController.m in Sources */,
@@ -1186,6 +1231,7 @@
 				25E898FB18ED76E600EE3749 /* JDFlipClockView.m in Sources */,
 				257D95DA18E12B6A00F742BB /* MJPopupBackgroundView.m in Sources */,
 				257CC78118D747FE000B0708 /* main.m in Sources */,
+				25C979B919590A7D00C8C8DE /* NSTextCheckingResult+ExtendedURL.m in Sources */,
 				257D95BB18D9578C00F742BB /* MBProgressHUD.m in Sources */,
 				25E898FA18ED76E600EE3749 /* JDDateCountdownFlipView.m in Sources */,
 				25C97859195427AB00C8C8DE /* MKAnnotationView+WebCache.m in Sources */,
@@ -1194,6 +1240,8 @@
 				25C978301951829A00C8C8DE /* NPALoadImage.m in Sources */,
 				25C9785A195427AB00C8C8DE /* NSData+ImageContentType.m in Sources */,
 				251EE29218E29376009B9DB6 /* IssueGiftViewController.m in Sources */,
+				25C979AD19590A6500C8C8DE /* CoreTextUtils.m in Sources */,
+				25C979B819590A7D00C8C8DE /* NSAttributedString+Attributes.m in Sources */,
 				25C97865195427AB00C8C8DE /* UIImage+WebP.m in Sources */,
 				25E8990618EE490F00EE3749 /* BannerDetailViewController.m in Sources */,
 				251EE29618E29555009B9DB6 /* IssueGiftTableViewCell.m in Sources */,
