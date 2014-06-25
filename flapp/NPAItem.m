@@ -12,6 +12,24 @@
 @synthesize itemType = _itemType;
 @synthesize position = _postion;
 
+
+- (id)init {
+    if (self = [super init]) {
+        return self;
+    }
+    
+    return nil;
+}
+
+- (instancetype)itemWithType:(NPAItemType)itemType {
+    //NSLog(@"itemTyp%lu%u",itemType);
+    if ([self init]) {
+        self.itemType = itemType;
+        return self;
+    }
+    return nil;
+}
+
 - (void)moveToPosition:(CGPoint)target atView:(UIView*)superView {
     [UIView beginAnimations:@"Move" context:nil];
     
@@ -36,14 +54,6 @@
                      }];
     
     [UIView commitAnimations];
-}
-
-- (id)init {
-    if (self = [super init]) {
-        return self;
-    }
-    
-    return nil;
 }
 
 @end

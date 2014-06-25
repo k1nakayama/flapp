@@ -26,7 +26,7 @@
 #define IMAGE_SIZE [UIImage imageNamed:@"Single_Box.png"].size
 #define SCREEN_SIZE [UIScreen mainScreen].bounds.size
 #define HEIGHT_OF_TOOLBAR 50
-#define OFFSET (IS_WIDESCREEN ? (STATUS_BAR_HIDDEN ? 40 : 60) : (STATUS_BAR_HIDDEN ? 35 : 55))
+#define OFFSET (IS_WIDESCREEN ? (STATUS_BAR_HIDDEN ? (IsIOS7()?60:100) : (IsIOS7()?80:120)) : (STATUS_BAR_HIDDEN ? (IsIOS7()?55:95) : (IsIOS7()?75:115)))
 
 #define IMAGE_NO_MONEY_TAG 33
 #define IMAGE_MONEY_TAG 44
@@ -86,51 +86,22 @@
 
 	UIImageView *bg = [[UIImageView alloc]
 	                   initWithImage:[NPALoadImage imageNamed:@"bg" isWideScreen:IS_WIDESCREEN]];
+    if (!IsIOS7()) {
+        CGSize sizeBg = bg.frame.size;
+        CGPoint originBg = bg.frame.origin;
+        
+        [bg setFrame:CGRectMake(originBg.x, originBg.y - 30 , sizeBg.width, sizeBg.height)];
+    }
 	[self.view addSubview:bg];
-
-	/*
-    _toolbar = [[UIToolbar alloc] init];
-	_toolbar.frame = CGRectMake(0, 0, SCREEN_SIZE.width, IsIOS7() ? 64 : 44);
-
-	if (IsIOS7())
-		[[UIToolbar appearance]
-		 setBarTintColor:[UIColor colorWithRed:248.0f / 255.0f
-		                                 green:140.0f / 255.0f
-		                                  blue:31.0f / 255.0f
-		                                 alpha:1.0]];
-	else
-		[_toolbar setTintColor:[UIColor colorWithRed:248.0f / 255.0f
-		                                       green:140.0f / 255.0f
-		                                        blue:31.0f / 255.0f
-		                                       alpha:1.0]];
-	[_toolbar setTranslucent:NO];
-	[_toolbar setTranslatesAutoresizingMaskIntoConstraints:YES];
-    */
-	
-    NSMutableArray *items = [[NSMutableArray alloc] init];
-
-	[items
-	 addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:
-	            UIBarButtonSystemItemFlexibleSpace
-	                                                         target:nil
-	                                                         action:nil]];
-	/*
-    [items addObject:
-	 [[UIBarButtonItem alloc] initWithTitle:@"閉じる"
-	                                  style:UIBarButtonItemStyleBordered
-	                                 target:self
-	                                 action:@selector(done)]];
-     */
-	[_toolbar setItems:items animated:NO];
-	[self.view addSubview:_toolbar];
 
 	// Add text
 	UIImageView *textImg =
 	    [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text2.png"]];
 	[textImg
 	 setFrame:CGRectMake(160 - textImg.image.size.width * 0.5,
-                         (IS_WIDESCREEN ? (STATUS_BAR_HIDDEN ? 110 : 90) : ( STATUS_BAR_HIDDEN ? 90 : 70)), textImg.image.size.width,
+                         (IS_WIDESCREEN ? (STATUS_BAR_HIDDEN ? (IsIOS7()? 80:50) : (IsIOS7()?60:30)) : ( STATUS_BAR_HIDDEN ? (IsIOS7()?60:30) : (IsIOS7()?40:10))), textImg.image.size.width,
 	                     textImg.image.size.height)];
+    NSLog(@"%f",textImg.frame.origin.y);
 
 	[self.view addSubview:textImg];
 
@@ -138,9 +109,24 @@
 	_subView = [[UIView alloc] initWithFrame:self.view.frame];
 	[_subView setBackgroundColor:[UIColor whiteColor]];
 	_subView.alpha = 0.0f;
+    
+    if (!IsIOS7()) {
+        CGSize sizeResult = _subView.frame.size;
+        CGPoint pointResult = _subView.frame.origin;
+        
+        [_subView setFrame:CGRectMake(pointResult.x, pointResult.y - 80, sizeResult.width, sizeResult.height)];
+    }
+    
 	[self.view addSubview:_subView];
 
 	_resultView = [[UIView alloc] initWithFrame:self.view.frame];
+    
+    if (!IsIOS7()) {
+        CGSize sizeResult = _resultView.frame.size;
+        CGPoint pointResult = _resultView.frame.origin;
+        
+        [_resultView setFrame:CGRectMake(pointResult.x, pointResult.y - 60, sizeResult.width, sizeResult.height)];
+    }
 
 	UIImageView *imgViewMoney = [[UIImageView alloc]
 	                             initWithImage:[NPALoadImage imageNamed:@"animation_money"
@@ -164,59 +150,58 @@
 
 - (void)setNumOfItems:(NSInteger)numOfItems {
 	NSAssert(numOfItems > 0, @"require num of item is larger than 0");
+    NSAssert(self.dataSource, @"instance sent method -itemForIndex: unrecognize");
 
 	[self setUpMe:numOfItems];
 }
 
 - (void)setUpMe:(NSInteger)num {
-	srand((unsigned int)time(NULL));
-
 	CGFloat dx = (SCREEN_SIZE.width - DISTANCE) * 0.5 - IMAGE_SIZE.width;
 	CGFloat dy =
 	    (SCREEN_SIZE.height - HEIGHT_OF_TOOLBAR - IMAGE_SIZE.height) * 0.5 -
-	    OFFSET;
+    OFFSET;
 
 	for (int i = 0; i < num; i++) {
-		NPAItem *item = [[NPAItem alloc] init];
-		item.delegate = self;
-
-		item.itemType = arc4random()%7;
-		item.image = [UIImage imageNamed:@"Single_Box.png"];
-
-		CGFloat tx = 0;
-		CGFloat ty = 0;
-
-		if (i == 0) {
-			tx = dx;
-			ty = dy;
-		}
-		else {
-			if (i % 2 == 0) {
-				dx -= DISTANCE + IMAGE_SIZE.width;
-				dy += DISTANCE + IMAGE_SIZE.height;
-			}
-			else {
-				dx += DISTANCE + IMAGE_SIZE.width;
-			}
-
-			tx = dx;
-			ty = dy;
-		}
-
-		item.position = CGPointMake(tx, ty);
-		[item setFrame:CGRectMake(tx, ty, IMAGE_SIZE.width, IMAGE_SIZE.height)];
-
-		[item setUserInteractionEnabled:YES];
-
-		UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-		                               initWithTarget:self
-		                                       action:@selector(eventHandlerTouch:)];
-		[item addGestureRecognizer:tap];
-
-		[self.view addSubview:item];
-		[self.view bringSubviewToFront:item];
-
-		[_arrayItems addObject:item];
+        if ([self.dataSource respondsToSelector:@selector(itemForIndex:)]) {
+            NPAItem *item = [self.dataSource itemForIndex:i];
+            item.delegate = self;
+            item.image = [UIImage imageNamed:@"Single_Box.png"];
+            
+            CGFloat tx = 0;
+            CGFloat ty = 0;
+            
+            if (i == 0) {
+                tx = dx;
+                ty = dy;
+            }
+            else {
+                if (i % 2 == 0) {
+                    dx -= DISTANCE + IMAGE_SIZE.width;
+                    dy += DISTANCE + IMAGE_SIZE.height;
+                }
+                else {
+                    dx += DISTANCE + IMAGE_SIZE.width;
+                }
+                
+                tx = dx;
+                ty = dy;
+            }
+            
+            item.position = CGPointMake(tx, ty);
+            [item setFrame:CGRectMake(tx, ty, IMAGE_SIZE.width, IMAGE_SIZE.height)];
+            
+            [item setUserInteractionEnabled:YES];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                           initWithTarget:self
+                                           action:@selector(eventHandlerTouch:)];
+            [item addGestureRecognizer:tap];
+            
+            [self.view addSubview:item];
+            [self.view bringSubviewToFront:item];
+            
+            [_arrayItems addObject:item];
+        }
 	}
 }
 
@@ -254,10 +239,37 @@
 	[imageView setAnimationDuration:0.5f];
 
 	[imageView startAnimating];
+    
+    if (_autoHidden) {
+        NSLog(@"animationStart");
+        //[self startTimer];
+        if ([self.delegate respondsToSelector:@selector(didFinishEvents:)]) {
+            [self.delegate didFinishEvents:_itemChoosed.itemType];
+        }
+    }
 }
 
 - (void)stopAnimation:(UIImageView *)imageView {
 	[imageView stopAnimating];
+}
+
+#pragma mark - Timer
+
+- (void)startTimer {
+    if (_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:3.0f
+                                                  target:self
+                                                selector:@selector(done)
+                                                userInfo:nil
+                                                 repeats:NO];
+    }
+}
+
+- (void)stopTimer {
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
 }
 
 #pragma mark - Handler event click
@@ -268,22 +280,76 @@
 	[self hiddenOthersItemExcept:item];
 
 	[item moveToPosition:CGPointMake(SCREEN_SIZE.width * 0.5,
-	                                 SCREEN_SIZE.height * 0.5)
+	                                 SCREEN_SIZE.height * 0.5 - (IsIOS7()?0:item.frame.size.height*0.47))
 	              atView:self.view];
 }
 
 - (void)done {
-	[self dismissViewControllerAnimated:YES completion:nil];
-	if ([self.delegate respondsToSelector:@selector(didFinishEvents:)]) {
-		[self.delegate didFinishEvents:_itemChoosed.itemType];
-	}
+    [self.view setUserInteractionEnabled:NO];
+    [UIView beginAnimations:@"Face In" context:nil];
+    [UIView animateWithDuration:1.0f
+                          delay:0.0f
+                        options:UIViewAnimationOptionShowHideTransitionViews
+                     animations:^{
+                         self.view.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         [self stopTimer];
+                         [_imgResult stopAnimating];
+                         _imgResult = nil;
+                         
+                         if ([self.delegate respondsToSelector:@selector(didFinishEvents:)]) {
+                             [self.delegate didFinishEvents:_itemChoosed.itemType];
+                         }
+                         
+                         [self.view removeFromSuperview];
+                     }];
+    [UIView commitAnimations];
 }
 
 #pragma mark -
 
+- (void)setAutoHidden:(BOOL)autoHidden {
+    //NSLog(@"autoHidden %hhd",_autoHidden);
+    _autoHidden = autoHidden;
+}
+
 - (void)showEventControllerAt:(UIViewController *)rootViewController {
+    self.view.alpha = 0.0;
+    [self.view setUserInteractionEnabled:NO];
     [rootViewController.view addSubview:self.view];
-	//[rootViewController presentViewController:self animated:YES completion:nil];
+    [UIView beginAnimations:@"Face In" context:nil];
+    [UIView animateWithDuration:1.0f
+                          delay:0.0f
+                        options:UIViewAnimationOptionShowHideTransitionViews
+                     animations:^{
+                         self.view.alpha = 1.0f;
+                     }
+                     completion:^(BOOL finished) {
+                        [self.view setUserInteractionEnabled:YES];
+                     }];
+    [UIView commitAnimations];
+}
+
+- (void)hiddenEventController {
+    [self.view setUserInteractionEnabled:NO];
+    [UIView beginAnimations:@"Face In" context:nil];
+    [UIView animateWithDuration:1.0f
+                          delay:0.0f
+                        options:UIViewAnimationOptionShowHideTransitionViews
+                     animations:^{
+                         self.view.alpha = 0.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         [_imgResult stopAnimating];
+                         /*
+                         if ([self.delegate respondsToSelector:@selector(didFinishEvents:)]) {
+                             [self.delegate didFinishEvents:_itemChoosed.itemType];
+                         }
+                         */
+                         [self.view removeFromSuperview];
+                     }];
+    [UIView commitAnimations];
 }
 
 #pragma mark -
@@ -339,8 +405,8 @@
 		                UIImageView *text1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text1.png"]];
 		                UIImageView *text2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"text3.png"]];
 
-		                [text1 setFrame:CGRectMake(160 - text1.image.size.width * 0.5, (IS_WIDESCREEN ? 100 : 75), text1.image.size.width, text1.image.size.height)];
-		                [text2 setFrame:CGRectMake(160 - text2.image.size.width * 0.5, (IS_WIDESCREEN ? 100 : 75) + text1.image.size.height + (IS_WIDESCREEN ? 20 : 15), text2.image.size.width, text2.image.size.height)];
+		                [text1 setFrame:CGRectMake(160 - text1.image.size.width * 0.5, (IS_WIDESCREEN ? (IsIOS7()?100:60) : (IsIOS7()?75:35)), text1.image.size.width, text1.image.size.height)];
+		                [text2 setFrame:CGRectMake(160 - text2.image.size.width * 0.5, (IS_WIDESCREEN ? (IsIOS7()?100:60) : (IsIOS7()?75:35)) + text1.image.size.height + (IS_WIDESCREEN ? 20 : 15), text2.image.size.width, text2.image.size.height)];
 
 		                [self.view addSubview:text1];
 		                [self.view addSubview:text2];

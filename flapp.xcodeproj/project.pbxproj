@@ -128,9 +128,6 @@
 		25C978251951827100C8C8DE /* animation_nomoney_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C977FF1951827100C8C8DE /* animation_nomoney_3@2x.png */; };
 		25C978261951827100C8C8DE /* animation_nomoney_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C978001951827100C8C8DE /* animation_nomoney_4.png */; };
 		25C978271951827100C8C8DE /* animation_nomoney_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C978011951827100C8C8DE /* animation_nomoney_4@2x.png */; };
-		25C9782F1951829A00C8C8DE /* NPAItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C9782A1951829A00C8C8DE /* NPAItem.m */; };
-		25C978301951829A00C8C8DE /* NPALoadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C9782C1951829A00C8C8DE /* NPALoadImage.m */; };
-		25C978311951829A00C8C8DE /* NPAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C9782E1951829A00C8C8DE /* NPAViewController.m */; };
 		25C978351951DD1700C8C8DE /* PointUpGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C978331951DD1700C8C8DE /* PointUpGameViewController.m */; };
 		25C978361951DD1800C8C8DE /* PointUpGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C978341951DD1700C8C8DE /* PointUpGameViewController.xib */; };
 		25C978381951DD7800C8C8DE /* animation_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C978371951DD7800C8C8DE /* animation_background.png */; };
@@ -159,6 +156,9 @@
 		25C979BB19590A7D00C8C8DE /* OHParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B519590A7D00C8C8DE /* OHParagraphStyle.m */; };
 		25C979BC19590A7D00C8C8DE /* OHTouchesGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B719590A7D00C8C8DE /* OHTouchesGestureRecognizer.m */; };
 		25C979BE19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C979BD19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib */; };
+		25C979C5195A659700C8C8DE /* NPAItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979C0195A659700C8C8DE /* NPAItem.m */; };
+		25C979C6195A659700C8C8DE /* NPALoadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979C2195A659700C8C8DE /* NPALoadImage.m */; };
+		25C979C7195A659700C8C8DE /* NPAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979C4195A659700C8C8DE /* NPAViewController.m */; };
 		25E898E118E56E9600EE3749 /* Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E018E56E9600EE3749 /* Empty.xib */; };
 		25E898E318E57C1B00EE3749 /* total.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E218E57C1B00EE3749 /* total.xib */; };
 		25E898E718EC3A2900EE3749 /* ExchangePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E898E518EC3A2900EE3749 /* ExchangePickerViewController.m */; };
@@ -330,12 +330,6 @@
 		25C977FF1951827100C8C8DE /* animation_nomoney_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "animation_nomoney_3@2x.png"; sourceTree = "<group>"; };
 		25C978001951827100C8C8DE /* animation_nomoney_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = animation_nomoney_4.png; sourceTree = "<group>"; };
 		25C978011951827100C8C8DE /* animation_nomoney_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "animation_nomoney_4@2x.png"; sourceTree = "<group>"; };
-		25C978291951829A00C8C8DE /* NPAItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPAItem.h; sourceTree = "<group>"; };
-		25C9782A1951829A00C8C8DE /* NPAItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPAItem.m; sourceTree = "<group>"; };
-		25C9782B1951829A00C8C8DE /* NPALoadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPALoadImage.h; sourceTree = "<group>"; };
-		25C9782C1951829A00C8C8DE /* NPALoadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPALoadImage.m; sourceTree = "<group>"; };
-		25C9782D1951829A00C8C8DE /* NPAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPAViewController.h; sourceTree = "<group>"; };
-		25C9782E1951829A00C8C8DE /* NPAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPAViewController.m; sourceTree = "<group>"; };
 		25C978321951DD1700C8C8DE /* PointUpGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointUpGameViewController.h; sourceTree = "<group>"; };
 		25C978331951DD1700C8C8DE /* PointUpGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointUpGameViewController.m; sourceTree = "<group>"; };
 		25C978341951DD1700C8C8DE /* PointUpGameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointUpGameViewController.xib; sourceTree = "<group>"; };
@@ -447,6 +441,12 @@
 		25C979B619590A7D00C8C8DE /* OHTouchesGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHTouchesGestureRecognizer.h; sourceTree = "<group>"; };
 		25C979B719590A7D00C8C8DE /* OHTouchesGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHTouchesGestureRecognizer.m; sourceTree = "<group>"; };
 		25C979BD19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IssueGiftTableDefaultCell.xib; sourceTree = "<group>"; };
+		25C979BF195A659700C8C8DE /* NPAItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPAItem.h; sourceTree = "<group>"; };
+		25C979C0195A659700C8C8DE /* NPAItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPAItem.m; sourceTree = "<group>"; };
+		25C979C1195A659700C8C8DE /* NPALoadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPALoadImage.h; sourceTree = "<group>"; };
+		25C979C2195A659700C8C8DE /* NPALoadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPALoadImage.m; sourceTree = "<group>"; };
+		25C979C3195A659700C8C8DE /* NPAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPAViewController.h; sourceTree = "<group>"; };
+		25C979C4195A659700C8C8DE /* NPAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPAViewController.m; sourceTree = "<group>"; };
 		25E898E018E56E9600EE3749 /* Empty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Empty.xib; sourceTree = "<group>"; };
 		25E898E218E57C1B00EE3749 /* total.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = total.xib; sourceTree = "<group>"; };
 		25E898E418EC3A2900EE3749 /* ExchangePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangePickerViewController.h; sourceTree = "<group>"; };
@@ -736,12 +736,12 @@
 		25C977BF195181E600C8C8DE /* PointUpGame */ = {
 			isa = PBXGroup;
 			children = (
-				25C978291951829A00C8C8DE /* NPAItem.h */,
-				25C9782A1951829A00C8C8DE /* NPAItem.m */,
-				25C9782B1951829A00C8C8DE /* NPALoadImage.h */,
-				25C9782C1951829A00C8C8DE /* NPALoadImage.m */,
-				25C9782D1951829A00C8C8DE /* NPAViewController.h */,
-				25C9782E1951829A00C8C8DE /* NPAViewController.m */,
+				25C979BF195A659700C8C8DE /* NPAItem.h */,
+				25C979C0195A659700C8C8DE /* NPAItem.m */,
+				25C979C1195A659700C8C8DE /* NPALoadImage.h */,
+				25C979C2195A659700C8C8DE /* NPALoadImage.m */,
+				25C979C3195A659700C8C8DE /* NPAViewController.h */,
+				25C979C4195A659700C8C8DE /* NPAViewController.m */,
 				25C978321951DD1700C8C8DE /* PointUpGameViewController.h */,
 				25C978331951DD1700C8C8DE /* PointUpGameViewController.m */,
 				25C978341951DD1700C8C8DE /* PointUpGameViewController.xib */,
@@ -1202,18 +1202,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				25C97866195427AB00C8C8DE /* UIImageView+HighlightedWebCache.m in Sources */,
-				25C978311951829A00C8C8DE /* NPAViewController.m in Sources */,
 				257CC7B518D76A80000B0708 /* BannerListViewCell.m in Sources */,
 				25C979BB19590A7D00C8C8DE /* OHParagraphStyle.m in Sources */,
 				25C979BA19590A7D00C8C8DE /* OHAttributedLabel.m in Sources */,
 				25E898FC18ED76E600EE3749 /* JDFlipImageView.m in Sources */,
-				25C9782F1951829A00C8C8DE /* NPAItem.m in Sources */,
 				257CC7AB18D74C62000B0708 /* PointExchangeViewController.m in Sources */,
 				25C97867195427AB00C8C8DE /* UIImageView+WebCache.m in Sources */,
 				257D95C818DAE9D600F742BB /* ExchangeInputViewController.m in Sources */,
 				257D95DB18E12B6A00F742BB /* UIViewController+MJPopupViewController.m in Sources */,
 				25C97862195427AB00C8C8DE /* UIButton+WebCache.m in Sources */,
 				25E8990018ED76E600EE3749 /* JDFlipNumberViewImageFactory.m in Sources */,
+				25C979C5195A659700C8C8DE /* NPAItem.m in Sources */,
 				25C9779C195026DF00C8C8DE /* NewPointViewController.m in Sources */,
 				25E898E718EC3A2900EE3749 /* ExchangePickerViewController.m in Sources */,
 				25C97863195427AB00C8C8DE /* UIImage+GIF.m in Sources */,
@@ -1241,7 +1240,6 @@
 				25C97859195427AB00C8C8DE /* MKAnnotationView+WebCache.m in Sources */,
 				25C97864195427AB00C8C8DE /* UIImage+MultiFormat.m in Sources */,
 				25E8990118ED76E600EE3749 /* UIView+JDFlipImageView.m in Sources */,
-				25C978301951829A00C8C8DE /* NPALoadImage.m in Sources */,
 				25C9785A195427AB00C8C8DE /* NSData+ImageContentType.m in Sources */,
 				251EE29218E29376009B9DB6 /* IssueGiftViewController.m in Sources */,
 				25C979AD19590A6500C8C8DE /* CoreTextUtils.m in Sources */,
@@ -1249,11 +1247,13 @@
 				25C97865195427AB00C8C8DE /* UIImage+WebP.m in Sources */,
 				25E8990618EE490F00EE3749 /* BannerDetailViewController.m in Sources */,
 				251EE29618E29555009B9DB6 /* IssueGiftTableViewCell.m in Sources */,
+				25C979C7195A659700C8C8DE /* NPAViewController.m in Sources */,
 				257D95BE18DADD3200F742BB /* PointExchangeViewCell.m in Sources */,
 				257D95CD18DE290E00F742BB /* SmsAuthSendViewController.m in Sources */,
 				25C978351951DD1700C8C8DE /* PointUpGameViewController.m in Sources */,
 				25E898FD18ED76E600EE3749 /* JDFlipNumberDigitView.m in Sources */,
 				25C9785B195427AB00C8C8DE /* SDImageCache.m in Sources */,
+				25C979C6195A659700C8C8DE /* NPALoadImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

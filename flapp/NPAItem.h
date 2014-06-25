@@ -39,6 +39,16 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) id<NPAItemDelegate> delegate;
 
 /**
+ *	@brief	method create instance object
+ *
+ *	@param 	itemType 	NPAItemType
+ *
+ *	@return	instancetype
+ */
+- (instancetype)itemWithType:(NPAItemType)itemType;
+
+
+/**
  *	@brief	Change item's position
  *
  *	@param 	target 	It is location, that item is moved to.

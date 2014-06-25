@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NPAViewController.h"
 
-@interface PointUpGameViewController : UIViewController
+@interface PointUpGameViewController : UIViewController <NPAViewControllerDataSource,NPAViewControllerDelegate>{
+    NPAViewController *npaController;
+}
 
 @end

@@ -241,16 +241,16 @@
 }
 
 -(void)hudWasHidden:(MBProgressHUD *)hud{
-    NSLog(@"exec hudWasHidden");
+    //NSLog(@"exec hudWasHidden");
     [_progress removeFromSuperview];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    NSLog(@"exec numberOfSectionsInTableView");
+    //NSLog(@"exec numberOfSectionsInTableView");
     return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"exec numberOfRowsInSection");
+    //NSLog(@"exec numberOfRowsInSection");
     switch (section) {
         case 0:
             return recommendInfo.count;
@@ -264,7 +264,7 @@
     return 0;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"exec cellForRowAtIndexPath");
+    //NSLog(@"exec cellForRowAtIndexPath");
 
     NSString *identifier;
     if(indexPath.section == 0){
@@ -645,7 +645,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"exec heightForRowAtIndexPath");
+    //NSLog(@"exec heightForRowAtIndexPath");
     if(indexPath.section == 1 && indexPath.row == 0){
         return 95;
     }
