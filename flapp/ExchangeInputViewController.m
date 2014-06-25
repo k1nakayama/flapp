@@ -376,9 +376,24 @@
 }
 
 -(void)doExchange:(id)popupViewController{
-    [NSThread sleepForTimeInterval:3.0f];
-    NSDictionary *gift_detail = [NSDictionary dictionaryWithObjectsAndKeys:@"pex1000",@"gift_name",@"2",@"gift_num",nil];
-    NSArray *exchange_detail = [NSArray arrayWithObjects:gift_detail,nil];
+    //[NSThread sleepForTimeInterval:3.0f];
+    
+    NSDictionary *gift_detail;
+    NSMutableArray *exchange_detail = [NSMutableArray array];
+    
+    for (int i=1; i<giftNumList.count; i++) {
+        if([[giftNumList objectAtIndex:i]intValue] > 0){
+            NSArray *giftDetail_list = [giftDetail objectForKey:@"gift_detail"];
+            NSDictionary *giftDetail_list2 = [giftDetail_list objectAtIndex:i-1];
+            NSString *gift_name = [giftDetail_list2 objectForKey:@"gift_name"];
+            gift_detail = [NSDictionary dictionaryWithObjectsAndKeys:gift_name,@"gift_name",[giftNumList objectAtIndex:i],@"gift_num", nil];
+            NSLog(@"gift_detail array %@",gift_detail);
+            [exchange_detail addObject:gift_detail];
+        }
+    }
+    NSLog(@"exchange_detail %@",exchange_detail);
+    //NSDictionary *gift_detail = [NSDictionary dictionaryWithObjectsAndKeys:@"pex1000",@"gift_name",@"2",@"gift_num",nil];
+    //NSArray *exchange_detail = [NSArray arrayWithObjects:gift_detail,nil];
     NSDictionary *exchangeResult = [apiUtil orderExchange:exchange_detail];
     NSLog(@"exchange_result %@",exchangeResult);
 
@@ -389,6 +404,9 @@
     [noticePopupVC setNotice:@"交換が完了しました！"];
     void (^afterDismissPopup)(void) = ^(void){
         NSLog(@"afterDismissPopup");
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+        backButton.title = @"戻る";
+        self.navigationItem.backBarButtonItem = backButton;
         IssueGiftViewController *issueGiftVC = [[IssueGiftViewController alloc] init];
         [issueGiftVC setExchangeInfo:exchangeResult];
         [self.navigationController pushViewController:issueGiftVC animated:YES];

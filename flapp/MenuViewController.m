@@ -22,10 +22,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        //self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"MENU" image:[UIImage imageNamed:@"setting"] tag:3];
+        //self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"メニュー" image:[UIImage imageNamed:@"setting"] tag:3];
         UIImage *unselectImg = [[UIImage imageNamed:@"footer31"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIImage *selectImg = [[UIImage imageNamed:@"footer30"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"MENU" image:unselectImg tag:3];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"メニュー" image:unselectImg tag:3];
         [self.tabBarItem setSelectedImage:selectImg];
     }
     return self;

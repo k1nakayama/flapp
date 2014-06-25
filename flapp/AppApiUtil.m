@@ -361,7 +361,7 @@
     NSData *json_data = [self createJsonObject:param_list];
     NSDictionary *jsonObj = [self requestApiWithRequestUrl:@"http://pc.flapp.pbase.pocket.ph/api/getGiftInfo" json:json_data];
     
-    NSLog(@"checkAuthCode: %@",jsonObj);
+    //NSLog(@"checkAuthCode: %@",jsonObj);
     
     NSString *status_code = [jsonObj objectForKey:@"status_code"];
     NSString *detail_code = [jsonObj objectForKey:@"detail_code"];

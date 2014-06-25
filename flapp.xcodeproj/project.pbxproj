@@ -158,6 +158,7 @@
 		25C979BA19590A7D00C8C8DE /* OHAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B319590A7D00C8C8DE /* OHAttributedLabel.m */; };
 		25C979BB19590A7D00C8C8DE /* OHParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B519590A7D00C8C8DE /* OHParagraphStyle.m */; };
 		25C979BC19590A7D00C8C8DE /* OHTouchesGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979B719590A7D00C8C8DE /* OHTouchesGestureRecognizer.m */; };
+		25C979BE19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C979BD19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib */; };
 		25E898E118E56E9600EE3749 /* Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E018E56E9600EE3749 /* Empty.xib */; };
 		25E898E318E57C1B00EE3749 /* total.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E218E57C1B00EE3749 /* total.xib */; };
 		25E898E718EC3A2900EE3749 /* ExchangePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E898E518EC3A2900EE3749 /* ExchangePickerViewController.m */; };
@@ -445,6 +446,7 @@
 		25C979B519590A7D00C8C8DE /* OHParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHParagraphStyle.m; sourceTree = "<group>"; };
 		25C979B619590A7D00C8C8DE /* OHTouchesGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHTouchesGestureRecognizer.h; sourceTree = "<group>"; };
 		25C979B719590A7D00C8C8DE /* OHTouchesGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHTouchesGestureRecognizer.m; sourceTree = "<group>"; };
+		25C979BD19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IssueGiftTableDefaultCell.xib; sourceTree = "<group>"; };
 		25E898E018E56E9600EE3749 /* Empty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Empty.xib; sourceTree = "<group>"; };
 		25E898E218E57C1B00EE3749 /* total.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = total.xib; sourceTree = "<group>"; };
 		25E898E418EC3A2900EE3749 /* ExchangePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangePickerViewController.h; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 				251EE29418E29555009B9DB6 /* IssueGiftTableViewCell.h */,
 				251EE29518E29555009B9DB6 /* IssueGiftTableViewCell.m */,
 				251EE29718E29570009B9DB6 /* IssueGiftTableViewCell.xib */,
+				25C979BD19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib */,
 				257D95CA18DE290E00F742BB /* SmsAuthSendViewController.h */,
 				257D95CB18DE290E00F742BB /* SmsAuthSendViewController.m */,
 				257D95CC18DE290E00F742BB /* SmsAuthSendViewController.xib */,
@@ -1090,6 +1093,7 @@
 				25C978221951827100C8C8DE /* animation_nomoney_2.png in Resources */,
 				25C97779194DDDB600C8C8DE /* SpecialBlock.png in Resources */,
 				25C977D11951820D00C8C8DE /* bg_ip5@2x.png in Resources */,
+				25C979BE19597E0600C8C8DE /* IssueGiftTableDefaultCell.xib in Resources */,
 				25C977A719507A2E00C8C8DE /* lable2.png in Resources */,
 				25C9780D1951827100C8C8DE /* 500@2x.png in Resources */,
 				25C977CF1951820D00C8C8DE /* bg@2x.png in Resources */,
