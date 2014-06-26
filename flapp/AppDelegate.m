@@ -13,6 +13,7 @@
 #import "AppApiUtil.h"
 #import "PointUpGameViewController.h"
 
+
 void uncaughtExceptionHandler (NSException *exception){
     NSLog(@"CRASH: %@", exception);
     NSLog(@"Stack Trace: %@",[exception callStackSymbols]);
