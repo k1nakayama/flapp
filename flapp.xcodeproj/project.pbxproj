@@ -146,7 +146,6 @@
 		25C97865195427AB00C8C8DE /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C97854195427AB00C8C8DE /* UIImage+WebP.m */; };
 		25C97866195427AB00C8C8DE /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C97856195427AB00C8C8DE /* UIImageView+HighlightedWebCache.m */; };
 		25C97867195427AB00C8C8DE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C97858195427AB00C8C8DE /* UIImageView+WebCache.m */; };
-		25C9796F19542F7C00C8C8DE /* nowprint.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C9796E19542F7C00C8C8DE /* nowprint.png */; };
 		25C979711954381D00C8C8DE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C979701954381D00C8C8DE /* CoreTelephony.framework */; };
 		25C9799A19590A2600C8C8DE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9799919590A2600C8C8DE /* CoreText.framework */; };
 		25C979AD19590A6500C8C8DE /* CoreTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979AC19590A6500C8C8DE /* CoreTextUtils.m */; };
@@ -159,6 +158,7 @@
 		25C979C5195A659700C8C8DE /* NPAItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979C0195A659700C8C8DE /* NPAItem.m */; };
 		25C979C6195A659700C8C8DE /* NPALoadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979C2195A659700C8C8DE /* NPALoadImage.m */; };
 		25C979C7195A659700C8C8DE /* NPAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C979C4195A659700C8C8DE /* NPAViewController.m */; };
+		25C97A09195BAFBD00C8C8DE /* nowprint.png in Resources */ = {isa = PBXBuildFile; fileRef = 25C97A08195BAFBD00C8C8DE /* nowprint.png */; };
 		25E898E118E56E9600EE3749 /* Empty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E018E56E9600EE3749 /* Empty.xib */; };
 		25E898E318E57C1B00EE3749 /* total.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E898E218E57C1B00EE3749 /* total.xib */; };
 		25E898E718EC3A2900EE3749 /* ExchangePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E898E518EC3A2900EE3749 /* ExchangePickerViewController.m */; };
@@ -425,7 +425,6 @@
 		25C9796B19542C8500C8C8DE /* vp8li.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vp8li.h; sourceTree = "<group>"; };
 		25C9796C19542C8500C8C8DE /* webp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = webp.c; sourceTree = "<group>"; };
 		25C9796D19542C8500C8C8DE /* webpi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = webpi.h; sourceTree = "<group>"; };
-		25C9796E19542F7C00C8C8DE /* nowprint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nowprint.png; path = "../../../../Google ドライブ/ポイントアプリ/クライアント関連/フロントライン/画像素材/その他素材/nowprint.png"; sourceTree = "<group>"; };
 		25C979701954381D00C8C8DE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		25C9799919590A2600C8C8DE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		25C979AB19590A6500C8C8DE /* CoreTextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextUtils.h; sourceTree = "<group>"; };
@@ -447,6 +446,7 @@
 		25C979C2195A659700C8C8DE /* NPALoadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPALoadImage.m; sourceTree = "<group>"; };
 		25C979C3195A659700C8C8DE /* NPAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPAViewController.h; sourceTree = "<group>"; };
 		25C979C4195A659700C8C8DE /* NPAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPAViewController.m; sourceTree = "<group>"; };
+		25C97A08195BAFBD00C8C8DE /* nowprint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nowprint.png; sourceTree = "<group>"; };
 		25E898E018E56E9600EE3749 /* Empty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Empty.xib; sourceTree = "<group>"; };
 		25E898E218E57C1B00EE3749 /* total.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = total.xib; sourceTree = "<group>"; };
 		25E898E418EC3A2900EE3749 /* ExchangePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangePickerViewController.h; sourceTree = "<group>"; };
@@ -709,7 +709,7 @@
 		25C977A0195079E600C8C8DE /* banner */ = {
 			isa = PBXGroup;
 			children = (
-				25C9796E19542F7C00C8C8DE /* nowprint.png */,
+				25C97A08195BAFBD00C8C8DE /* nowprint.png */,
 				25C97788194DE52700C8C8DE /* free.png */,
 				25C9778A194DE66900C8C8DE /* new.png */,
 				25C9778C194DE6C100C8C8DE /* high.png */,
@@ -1111,6 +1111,7 @@
 				25C9781E1951827100C8C8DE /* animation_no_money_ip5.png in Resources */,
 				257D95D318E07B1F00F742BB /* AuthCodeViewController.xib in Resources */,
 				25C977A919507A2E00C8C8DE /* lable4.png in Resources */,
+				25C97A09195BAFBD00C8C8DE /* nowprint.png in Resources */,
 				25C977BC1951337100C8C8DE /* Segment1.png in Resources */,
 				257D95EB18E1897800F742BB /* ConfirmPopupViewController.xib in Resources */,
 				25E8990718EE490F00EE3749 /* BannerDetailViewController.xib in Resources */,
@@ -1138,7 +1139,6 @@
 				257D95CE18DE290E00F742BB /* SmsAuthSendViewController.xib in Resources */,
 				25E898EA18ED694300EE3749 /* funassi.png in Resources */,
 				25C9780B1951827100C8C8DE /* 50.png in Resources */,
-				25C9796F19542F7C00C8C8DE /* nowprint.png in Resources */,
 				25C977D51951820D00C8C8DE /* text1.png in Resources */,
 				25C977D71951820D00C8C8DE /* text2.png in Resources */,
 				25E898FE18ED76E600EE3749 /* JDFlipNumberView.bundle in Resources */,

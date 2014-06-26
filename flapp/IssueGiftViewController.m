@@ -10,7 +10,7 @@
 #import "AppApiUtil.h"
 #import "UIImageView+WebCache.h"
 
-@interface IssueGiftViewController ()
+@interface IssueGiftViewController ()<UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
@@ -152,6 +152,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
+    actionSheet.tag = (indexPath.section * 10) + (indexPath.row);
+    actionSheet.delegate = self;
+    [actionSheet addButtonWithTitle:@"コードをコピー"];
+    [actionSheet addButtonWithTitle:@"コードを登録する"];
+    [actionSheet addButtonWithTitle:@"コードをメールで送る"];
+    [actionSheet addButtonWithTitle:@"キャンセル"];
+    [actionSheet setCancelButtonIndex:3];
+    [actionSheet showInView:self.view];
+    
     /*
     ExchangeInputViewController *exchangeInputViewController = [[ExchangeInputViewController alloc] init];
     
@@ -160,6 +171,9 @@
     */
 }
 
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"actionSheet clicked %@ index: %ld",actionSheet,(long)buttonIndex);
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0){
         return 80;
